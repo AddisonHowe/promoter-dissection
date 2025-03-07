@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "promdis"
+dynamic = ["version"]
+requires-python = ">= 3.8"
+readme = "README.md"
+description = "Dissecting promoter sequences."
+authors = [
+  {name = "Addison Howe"},
+  {name = "Joseph Landsittel"}
+]
+
+[project.scripts]
+promdis = "promdis.__main__:main"
