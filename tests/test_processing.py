@@ -6,8 +6,8 @@ import pytest
 import numpy as np
 import pandas as pd
 
-from promdis.processing.helpers import gene_seq_to_array
-from promdis.processing.helpers import get_sequence_arrays_and_counts
+from promdis.processing import gene_seq_to_array
+from promdis.processing import get_sequence_arrays_and_counts
 
 
 @pytest.mark.parametrize("seq, mapping, expected", [

@@ -1,12 +1,10 @@
-"""Data processing helper functions
+"""Data processing functions
 
 """
 
-import math
-import os
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+
 
 NT_MAP = {c: i for i, c in enumerate(['A', 'C', 'G', 'T'])}
 
@@ -33,18 +31,3 @@ def get_sequence_arrays_and_counts(
     counts_rna = np.array(df[key_rna], dtype=int)
 
     return promoters, counts_dna, counts_rna
-
-
-def compare_sequences(seq1, seq2):
-    """Screen for all differing positions between seq1 and seq2.
-    Supports broadcasting.
-    """
-    seq1 = np.broadcast_to(seq1, np.broadcast_shapes(seq1.shape, seq2.shape))
-    seq2 = np.broadcast_to(seq2, np.broadcast_shapes(seq1.shape, seq2.shape))
-    return seq1 != seq2
-
-
-def count_mutations(seqs, wt_seq):
-    mut_screen = compare_sequences(seqs, wt_seq)
-    nmuts = np.sum(mut_screen, axis=-1)
-    return nmuts
