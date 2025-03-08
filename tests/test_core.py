@@ -9,7 +9,9 @@ from promdis.helpers import binary_arr_to_int, int_to_binary_arr
 from promdis.core import compare_sequences, count_mutations, get_segments
 from promdis.core import compute_mean_wildtype_expression
 from promdis.core import compute_segmented_mean_expression
+from promdis.core import compute_pairwise_segmented_mean_expression
 
+NA = np.nan
 
 @pytest.mark.parametrize("seq1, seq2, expected", [
     [[0,3,0,0], [0,3,0,1], [0,0,0,1]],
@@ -139,6 +141,50 @@ def test_compute_segmented_mean_expression(
     errors = []
     if not (np.allclose(val, exp_val, equal_nan=True)):
         msg = f"Wrong value. Got:\n{val}\nExpected:\n{exp_val}"
+        errors.append(msg)
+    if not (val.shape == exp_shape):
+        msg = f"Wrong shape. Got: {val.shape} Expected: {exp_shape}"
+        errors.append(msg)
+    assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
+
+
+@pytest.mark.filterwarnings("ignore:invalid value encountered in divide")
+@pytest.mark.parametrize(
+    "seqs, expression, wt_seq, segment_size, exp_val, exp_shape", [
+    [[[1,1,2,2,3,3,4,4],[1,2,2,1,3,4,3,4],[1,4,2,3,3,3,3,4]], 
+     [2,4,2], [2,2,2,2,3,3,3,3], 2, 
+     [[[[NA,NA,NA,NA],[NA,2,2,NA],[NA,2,2,NA],[NA,NA,NA,NA]],      # (0,0) vs (0,0)
+       [[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,2,NA,2],[NA,NA,NA,NA]],    # (0,0) vs (0,1)
+       [[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA]],  # (0,0) vs (1,0)
+       [[NA,NA,NA,NA],[2,NA,NA,2],[2,NA,NA,2],[NA,NA,NA,NA]]],     # (0,0) vs (1,1)
+      [[[NA,NA,NA,NA],[NA,NA,2,NA],[NA,NA,NA,NA],[NA,NA,2,NA]],    # (0,1) vs (0,0)
+       [[NA,NA,NA,NA],[NA,3,4,3],[NA,4,4,4],[NA,3,4,3]],           # (0,1) vs (0,1)
+       [[NA,NA,NA,NA],[4,NA,NA,NA],[4,NA,NA,NA],[4,NA,NA,NA]],     # (0,1) vs (1,0)
+       [[NA,NA,NA,NA],[2,NA,NA,NA],[NA,NA,NA,NA],[2,NA,NA,NA]]],   # (0,1) vs (1,1)
+      [[[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA]],  # (1,0) vs (0,0)
+       [[NA,4,4,4],[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA]],     # (1,0) vs (0,1)
+       [[4,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA]],   # (1,0) vs (1,0)
+       [[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA]]], # (1,0) vs (1,1)
+      [[[NA,2,2,NA],[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,2,2,NA]],      # (1,1) vs (0,0)
+       [[NA,2,NA,2],[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA]],    # (1,1) vs (0,1)
+       [[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA]],  # (1,1) vs (1,0)
+       [[2,NA,NA,2],[NA,NA,NA,NA],[NA,NA,NA,NA],[2,NA,NA,2]]]],    # (1,1) vs (1,1)
+     (4,4,4,4)],
+])
+def test_compute_pairwise_segmented_mean_expression(
+    seqs, expression, wt_seq, segment_size, exp_val, exp_shape
+):
+    seqs = np.array(seqs)
+    expression = np.array(expression)
+    wt_seq = np.array(wt_seq)
+    val = compute_pairwise_segmented_mean_expression(
+        seqs, expression, wt_seq, segment_size
+    )
+    exp_val = np.array(exp_val)
+    errors = []
+    if not (np.allclose(val, exp_val, equal_nan=True)):
+        msg = f"Wrong value. Got:\n{val}\nExpected:\n{exp_val}"
+        # msg = f"{val != exp_val}"
         errors.append(msg)
     if not (val.shape == exp_shape):
         msg = f"Wrong shape. Got: {val.shape} Expected: {exp_shape}"

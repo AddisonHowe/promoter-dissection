@@ -135,7 +135,11 @@ def compute_segmented_mean_expression(
     nseqs, nbases = sequences.shape
     mut_screen = compare_sequences(sequences, wt_seq)
 
-    segments = get_segments(sequences, segment_size, 0, segment_size)
+    segments = get_segments(
+        sequences, segment_size, 
+        startpos=0, 
+        stride=segment_size
+    )
 
     nsegments = segments.shape[0]
 
@@ -177,3 +181,53 @@ def compute_gamma(sequences, expression, wt_seq, segment_size=2):
         prof_nmuts = np.sum(profile)
         gamma[prof_nmuts] += xi[idx]**2 / math.comb(segment_size, prof_nmuts)
     return gamma
+
+
+def compute_pairwise_segmented_mean_expression(
+        sequences,
+        expression,
+        wt_seq,
+        segment_size,
+):
+    """Compute the pairwise average expression level resulting from a mutation,
+    across segments of a fixed size.
+
+    """
+    nseqs, nbases = sequences.shape
+    mut_screen = compare_sequences(sequences, wt_seq)
+
+    segments = get_segments(
+        sequences, segment_size, 
+        startpos=0, 
+        stride=segment_size
+    )
+
+    nsegments = segments.shape[0]
+
+    mut_screen_over_segments = np.array(
+        [mut_screen[i,segments] for i in range(nseqs)]
+    )
+
+    # Each length k segment's binary string mutation profile corresponds to an 
+    # index in [0, 2**k).
+    nidxs = 2**segment_size
+    weights = 1 << np.arange(segment_size)[::-1]
+    mutation_profiles = mut_screen_over_segments @ weights
+
+    # We now need to loop over the segments, and compute the expression.
+    mean_exp_by_index = np.zeros([nidxs, nidxs, nsegments, nsegments])
+    for mutidx1 in range(nidxs):
+        idx_screen1 = mutation_profiles == mutidx1
+        for mutidx2 in range(nidxs):
+            idx_screen2 = mutation_profiles == mutidx2
+            joint_screen = np.bitwise_and(
+                idx_screen1[:, :, None], 
+                idx_screen2[:, None, :]
+            )
+            exp_levels = joint_screen * expression[:,None,None]
+            mean_exp_by_index[mutidx1, mutidx2,:,:] = np.sum(
+                exp_levels,
+                axis=0
+            ) / joint_screen.sum(0)
+
+    return mean_exp_by_index
