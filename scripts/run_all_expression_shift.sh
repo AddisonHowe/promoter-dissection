@@ -3,7 +3,7 @@
 #
 # FILE: run_all_expression_shift.sh
 #
-# USAGE: run_all_expression_shift.sh [gene] [datdir]
+# USAGE: run_all_expression_shift.sh [datdir] [gene]
 #
 # DESCRIPTION: Run the expression_shift.py script on all data files in the 
 #  directory <datdir> that correspond to the given gene.
@@ -11,8 +11,8 @@
 # EXAMPLE: sh run_all_expression_shift.sh data/regseq_data ykgE
 #=============================================================================
 
-gene=$1
-datdir=$2
+datdir=$1
+gene=$2
 
 function process_fpath() {
     fpath=$1
