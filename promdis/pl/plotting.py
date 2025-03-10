@@ -4,6 +4,8 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import TwoSlopeNorm
+from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
 
 def plot_data(
@@ -38,5 +40,29 @@ def plot_data(
     
     ax.set_xlabel('position')
     ax.set_ylabel(kwargs.get('ylabel', None))
+
+    return ax
+
+
+def plot_data_2d(
+        values,
+        nan_color='k',
+        **kwargs,
+):
+    """Convenience plotting function for 2D segmented expression data."""
+    fig, ax = plt.subplots(1, 1, figsize=kwargs.get('figsize', None))
+    
+    cmap = kwargs.get('cmap', plt.cm.bwr_r.copy())
+    if nan_color:
+        cmap.set_bad(color=nan_color)
+
+    vmax = np.nanmax(np.abs(values))
+    norm = TwoSlopeNorm(vmin=-vmax, vcenter=0, vmax=vmax)
+    sc = ax.imshow(values.T, cmap=cmap, norm=norm)
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes('right', size='5%', pad=0.05)
+    cbar = fig.colorbar(sc, cax=cax)
+    ax.set_xlabel(kwargs.get('xlabel', "segment $i$"))
+    ax.set_ylabel(kwargs.get('ylabel', "segment $j$"))
 
     return ax
