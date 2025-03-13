@@ -87,7 +87,7 @@ def main(args):
 
     # Plot mean wildtype expression (1 dimension)
     ax = plot_data(
-        mu_1d[0], segment_size=2, bin_size=1,
+        mu_1d[0], segment_size=1, bin_size=1,
         cmap='viridis',
     )
     ax.set_title(f"{gene} mean wildtype expression $\\mu_{{i}}^*$")
@@ -135,9 +135,8 @@ def main(args):
         # Plot each group
         for xi, profile in zip(xi_1d_list, profile_groups):
             ax = plot_data(
-                xi, segment_size=2, bin_size=1,
+                xi, segment_size=1, bin_size=1,
             )
-            # s = "".join([str(t) for t in profile])
             s = ",".join(
                 [''.join([str(x) for x in np.array(t).flatten()]) 
                  for t in profile]
