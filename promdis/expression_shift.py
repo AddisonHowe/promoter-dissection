@@ -17,12 +17,12 @@ import warnings
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib.colors import TwoSlopeNorm
-from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
 from promdis.processing import get_sequence_arrays_and_counts, gene_seq_to_array
-from promdis.core import compute_pairwise_segmented_mean_expression
-from promdis.helpers import binary_arr_to_int
+from promdis.core import compute_mean_expression_by_mutation
+from promdis.core import compute_mean_expression_by_pairwise_mutation
+from promdis.core import compute_expression_shift_by_mutation
+from promdis.core import compute_expression_shift_by_pairwise_mutation
 from promdis.pl import plot_data, plot_data_2d
 
 
@@ -75,56 +75,112 @@ def main(args):
         for g in wildtype_genes_df['name'].unique()
     }
     gene_wt_seq = wt_gene_sequences[gene]
-    nbases = len(gene_wt_seq)
     wt_seq = gene_seq_to_array(gene_wt_seq)
 
-    # Compute mu
+    # Compute mean expression in 1 dimension
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", RuntimeWarning)
-        mu = compute_pairwise_segmented_mean_expression(
-            seqs, expression, wt_seq, 
+        mu_1d = compute_mean_expression_by_mutation(
+            seqs, expression, wt_seq,
             segment_size=segment_size
         )
 
-    # Plot mean wildtype expression
-    fig, ax = plt.subplots(1, 1)
-    sc = ax.imshow(mu[0,0])
-    divider = make_axes_locatable(ax)
-    cax = divider.append_axes('right', size='5%', pad=0.05)
-    cbar = fig.colorbar(sc, cax=cax)
-    ax.set_title(f"{gene} mean wildtype expression $\\mu_{{i, j}}^*$")
+    # Plot mean wildtype expression (1 dimension)
+    ax = plot_data(
+        mu_1d[0], segment_size=2, bin_size=1,
+        cmap='viridis',
+    )
+    ax.set_title(f"{gene} mean wildtype expression $\\mu_{{i}}^*$")
     ax.set_xlabel(f"segment $i$")
-    ax.set_ylabel(f"segment $j$");
+    ax.set_ylabel(f"$\\mu$");
 
-    
-    saveas = f"{outdir}/{prefix}_mean_wt_expression.pdf"
+    saveas = f"{outdir}/{prefix}_mean_wt_expression_1d.pdf"
     plt.savefig(saveas)
     plt.close()
 
-    # Plot xi for various mutation profiles
-    mutation_profiles = [
-        [(0, 0), (0, 1)],
-        [(0, 0), (1, 0)],
-        [(0, 0), (1, 1)],
-        [(0, 1), (0, 1)],
-        [(0, 1), (1, 0)],
-        [(0, 1), (1, 1)],
-        [(1, 1), (1, 1)],
-    ]
+    # Compute mean expression in 2 dimensions
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", RuntimeWarning)
+        mu_2d = compute_mean_expression_by_pairwise_mutation(
+            seqs, expression, wt_seq,
+            segment_size=segment_size
+        )
 
-    for b1, b2 in mutation_profiles:
-        idx1 = binary_arr_to_int(np.array(b1))
-        idx2 = binary_arr_to_int(np.array(b2))
-        xi = mu[idx1, idx2] - mu[0, 0]
-        ax = plot_data_2d(xi)
-        ax.set_title(f"Expression shift $\\xi[i,j;{b1},{b2}]$")
-        s1 = "".join([str(x) for x in b1])
-        s2 = "".join([str(x) for x in b2])
-        saveas = f"{outdir}/{prefix}_xi_{s1}_{s2}.pdf"
-        plt.savefig(saveas)
-        plt.close()
-    
-    return
+    # Plot mean wildtype expression (2 dimensions)
+    ax = plot_data_2d(
+        mu_2d[0,0], norm=None, cmap='viridis',
+    )
+    ax.set_title(f"{gene} mean wildtype expression $\\mu_{{i,j}}^*$")
+    ax.set_xlabel(f"segment $i$")
+    ax.set_ylabel(f"segment $j$");
+
+    saveas = f"{outdir}/{prefix}_mean_wt_expression_2d.pdf"
+    plt.savefig(saveas)
+    plt.close()
+
+    # Plot xi for various mutation profiles (1 dimension)
+    mutation_profiles_1d = [
+        [(0,1),(1,0),],
+        [(1,1)],
+    ]
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", RuntimeWarning)
+        # Compute expression shift in 1 dimension
+        xi_1d_list, profile_groups = compute_expression_shift_by_mutation(
+            seqs, expression, wt_seq, 
+            segment_size=segment_size,
+            profile_groups=mutation_profiles_1d,
+        )
+
+        # Plot each group
+        for xi, profile in zip(xi_1d_list, profile_groups):
+            ax = plot_data(
+                xi, segment_size=2, bin_size=1,
+            )
+            # s = "".join([str(t) for t in profile])
+            s = ",".join(
+                [''.join([str(x) for x in np.array(t).flatten()]) 
+                 for t in profile]
+            )
+            ax.set_title(f"{gene} expression shift $\\xi_{{i}}[{{{s}}}]$")
+            ax.set_xlabel(f"segment $i$")
+            ax.set_ylabel(f"$\\xi$");
+            saveas = f"{outdir}/{prefix}_xi_1d_{s.replace(',', '_')}.pdf"
+            plt.savefig(saveas)
+            plt.close()
+
+
+    # Plot xi for various mutation profiles (2 dimensions)
+    mutation_profiles_2d = [
+        [((0,0),(0,1)), ((0,0),(1,0)), ((0,1),(0,0)), ((1,0),(0,0))],
+        [((0,1),(0,1)), ((0,1),(1,0)), ((1,0),(1,0))],
+        [((0,0),(1,1)), ((1,1),(0,0))],
+    ]
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", RuntimeWarning)
+        # Compute expression shift in 2 dimensions
+        xi_2d_list, profile_groups = compute_expression_shift_by_pairwise_mutation(
+            seqs, expression, wt_seq, 
+            segment_size=segment_size,
+            profile_groups=mutation_profiles_2d,
+        )
+
+        # Plot each group
+        for xi, profile in zip(xi_2d_list, profile_groups):
+            ax = plot_data_2d(
+                xi,
+            )
+            s = ",".join(
+                [''.join([str(x) for x in np.array(t).flatten()]) 
+                 for t in profile]
+            )
+            ax.set_title(f"{gene} expression shift $\\xi_{{i,j}}[{{{s}}}]$")
+            ax.set_xlabel(f"segment $i$")
+            ax.set_ylabel(f"segment $j$");
+            saveas = f"{outdir}/{prefix}_xi_2d_{s.replace(',','_')}.pdf"
+            plt.savefig(saveas)
+            plt.close()
+
 
 if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
