@@ -40,3 +40,17 @@ def get_segments(sequences, segment_size, startpos=0, stride=None):
         [np.arange(startidx, startidx + segment_size) for startidx in starts]
     )
     return segments
+
+def get_nested_depth(x):
+    """Check the depth of a nested data structure, e.g. a list of lists.
+
+    Args:
+        x (np.ndarray | list | tuple | float): Data to check depth
+    
+    Returns:
+        (int) : Number of layers n in the data x, so that the first item in x
+            can be accessed via x[0][0]...[0] with n array accesses.
+    """
+    if isinstance(x, (np.ndarray, list, tuple)):
+        return 1 + max([get_nested_depth(item) for item in x])
+    return 0  # base case, x is a single item

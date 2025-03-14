@@ -238,6 +238,16 @@ class TestSingleSegmentMutationFunctions:
      [[(0,0),(0,1),(1,0),(1,1)]],  # Profile Groups
      [[NA,2/3,2/3,NA]], # xi[{(0, 0),(0, 1),(1, 0),(1, 1)}]
     ],
+    [[[1,1,2,2,3,3,4,4],[1,2,2,1,3,4,3,4],[1,4,2,3,3,3,3,4]], 
+     [2,4,2], [2,2,2,2,3,3,3,3], 2, 
+     [(0,0),(0,1),(1,0),(1,1)],  # Profile Groups (as depth-1 list)
+     [NA,2/3,2/3,NA], # xi[{(0, 0),(0, 1),(1, 0),(1, 1)}]
+    ],
+    [[[1,1,2,2,3,3,4,4],[1,2,2,1,3,4,3,4],[1,4,2,3,3,3,3,4]], 
+     [2,4,2], [2,2,2,2,3,3,3,3], 2, 
+     (0,1),  # Profile Groups: (0, 1)
+     [NA,1,2,NA],     # xi[(0,1)]
+    ],
 ])
 def test_compute_expression_shift_by_mutation(
     sequences, expression, wt_seq, segment_size, profile_groups, 
@@ -390,6 +400,11 @@ class TestPairwiseSegmentMutationFunctions:
       [[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA]],    # xi[(1,1;1,0)]
       [[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,NA,NA,NA]],  # xi[(1,1;1,1)]
     ]],
+    [[[1,1,2,2,3,3,4,4],[1,2,2,1,3,4,3,4],[1,4,2,3,3,3,3,4]], 
+     [2,4,2], [2,2,2,2,3,3,3,3], 2, 
+     [((0,0),(0,1))],  # Profile Groups: [(0,0;0,0),(0,0;0,1),(0,0;1,0),(0,0;0,0)]
+     [[NA,NA,NA,NA],[NA,NA,NA,NA],[NA,0,NA,NA],[NA,NA,NA,NA]],
+    ],
 ])
 def test_compute_expression_shift_by_pairwise_mutation(
     sequences, expression, wt_seq, segment_size, profile_groups, 

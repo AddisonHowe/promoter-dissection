@@ -2,10 +2,10 @@
 
 """
 
-import math
 import numpy as np
 
 from .helpers import get_segments, int_to_binary_arr, binary_arr_to_int
+from .helpers import get_nested_depth
 
 
 def compare_sequences(seq1, seq2):
@@ -28,16 +28,26 @@ def count_mutations(seqs, wt_seq):
 def compute_mean_wildtype_expression(
         sequences,
         expression,
-        wt_sequence,
+        wt_seq,
 ):
-    """Mean expression when base pair j is the wildtype.
+    """Mean expression when base pair i is the wildtype.
+
+    Args:
+        sequences (np.ndarray[np.uint8]): Shape (nseqs, nbases).
+        expression (np.ndarray[int]): Shape (nseqs,).
+        wt_seq (np.ndarray[np.uint8]): Shape (nbases,)
+    
+    Returns:
+        (np.ndarray[float]): Shape (nbases,). Array of mean expression values 
+            such that the ith entry gives the mean expression across all
+            sequences with the wildtype base at position i.
     """
-    mut_screen = compare_sequences(sequences, wt_sequence)
+    mut_screen = compare_sequences(sequences, wt_seq)
     wt_screen = ~mut_screen
     num_wts = wt_screen.sum(axis=0)  # number of observed wildtype bases
     wt_counts = wt_screen * expression[:,None]
     mu_mean = wt_counts.sum(axis=0) / num_wts
-    assert mu_mean.shape == (len(wt_sequence),), "Bad shape"
+    assert mu_mean.shape == (len(wt_seq),), "Bad shape"
     return mu_mean
 
 
@@ -54,6 +64,17 @@ def compute_mean_expression_shift(
     The mean expression shift if the average of this quantity, computed across
     all sequences with a mutation at position j.
 
+    Args:
+        sequences (np.ndarray[np.uint8]): Shape (nseqs, nbases).
+        expression (np.ndarray[int]): Shape (nseqs,).
+        wt_seq (np.ndarray[np.uint8]): Shape (nbases,)
+    
+    Returns:
+        (np.ndarray[float]): Shape (nbases,). Array of expression shift values
+            such that the ith entry gives the difference between the mean 
+            expression across all sequences with a mutation at position i, and 
+            the mean expression level across all sequences with the wildtype 
+            base at position i.
     """
     wt_mean_expression = compute_mean_wildtype_expression(
         sequences, expression, wt_seq
@@ -178,7 +199,7 @@ def compute_expression_shift_by_mutation(
 
     The expression shift is calculated as the difference between the mean 
     expression across sequences with a specified mutation at a given segment, 
-    and the mean wildtype expression. 
+    and the mean wildtype expression.
 
     Args:
         sequences (np.ndarray[np.uint8]): Shape (nseqs, nbases).
@@ -190,17 +211,22 @@ def compute_expression_shift_by_mutation(
             mutation profiles, where k is the specified segment size. If 'nmuts',
             the mean expression shift is calculated across groups of mutation 
             profiles, where each group is defined as the set of all mutation 
-            profiles with a given number of mutations. Otherwise, should be a 
-            list of lists, where each sublist contains a number of binary tuples,
-            specifying those mutation profiles over which to compute the mean 
-            expression shift.
+            profiles with a given number of mutations. Otherwise, may be specified 
+            as a list of lists, where each sublist contains a number of binary 
+            tuples, specifying those mutation profiles over which to compute the 
+            mean expression shift.
 
     Returns:
-        (np.ndarray): Shape (ngroups, L). Mean expression shift across each 
-            group of mutation profiles.
-        (list[list[tuple]]): Shape (ngroups, ?, k). List of mutation profile 
-            groups. Each group is defined by the list of mutation profiles, 
-            specified as binary k-tuples.
+        (np.ndarray): Shape (ngroups, L) or (L,). If a single profile group is 
+            specified, either as a single tuple or a single list of tuples, the 
+            returned array is the mean expression shift corresponding to that 
+            profile. If multiple profile groups are given, each row of the 
+            returned array corresponds to a profile group.
+        (list[list[tuple]] | list[tuple]): Shape (ngroups, ?, k) or (?, K). 
+            List of mutation profile groups (each itself a list), if multiple 
+            groups are given. If a single profile group is specified, then a
+            single list, specifying the profile. Each group is defined by 
+            the list of mutation profiles, specified as a binary k-tuple.
     """
     # Get total expression and counts for each mutation profile.
     tot_exp_by_idx, counts_by_idx = compute_total_expression_by_mutation(
@@ -219,6 +245,7 @@ def compute_expression_shift_by_mutation(
             np.array([int_to_binary_arr(i, segment_size)]) 
             for i in range(nprofile_groups)
         ]
+        nesting_depth = 3
     elif profile_groups == 'nmuts':
         # Group profiles by the total number of mutations [0, 1,..., k]
         nprofile_groups = 1 + segment_size
@@ -227,11 +254,23 @@ def compute_expression_shift_by_mutation(
             profile = int_to_binary_arr(i, segment_size)
             nmuts = np.sum(profile)
             profile_groups[nmuts].append(profile)
+        nesting_depth = 3
     else:
         # Otherwise, check that the given grouping of profiles is consistent.
-        nprofile_groups = len(profile_groups)
+        nesting_depth = get_nested_depth(profile_groups)
+        if nesting_depth == 3:
+            nprofile_groups = len(profile_groups)
+        elif nesting_depth == 2:
+            nprofile_groups = 1
+            profile_groups = [profile_groups]
+        elif nesting_depth == 1:
+            nprofile_groups = 1
+            profile_groups = [[profile_groups]]
+            assert len(profile_groups)
+        else:
+            msg = f"Cannot handle given profile groups: {profile_groups}"
+            raise RuntimeError(msg)
         profile_groups = [np.array(x) for x in profile_groups]
-        # TODO: Include some checks
     
     total_expression = np.zeros([nprofile_groups, nsegments])
     counts = np.zeros([nprofile_groups, nsegments])
@@ -243,7 +282,11 @@ def compute_expression_shift_by_mutation(
     
     mean_expression = total_expression / counts
     expression_shift = mean_expression - mean_wildtype_expression
-    return expression_shift, profile_groups
+
+    if nesting_depth < 3:
+        return expression_shift[0], profile_groups[0]
+    else:
+        return expression_shift, profile_groups
 
 
 ###########################################
@@ -373,11 +416,17 @@ def compute_expression_shift_by_pairwise_mutation(
             which to compute the mean expression shift.
 
     Returns:
-        (np.ndarray): Shape (ngroups, L, L). Pairwise mean expression shift 
-            across each group of mutation profiles.
-        (list[list[tuple[tuple]]]): Shape (ngroups, ?, 2, k). List of mutation 
-            profile groups. Each group is defined by the list of mutation profile 
-            pairs, specified as a 2-tuple of binary k-tuples.
+        (np.ndarray): Shape (ngroups,L,L) or (L,L). If a single profile group is 
+            specified, either as a single tuple or a single list of tuples, the 
+            returned array is the pairwise mean expression shift corresponding 
+            to that profile. If multiple profile groups are given, each element 
+            of the returned array corresponds to a profile group.
+        (list[list[tuple[tuple]]] | list[tuple[tuple]]): Shape (ngroups,?,2,k) 
+            or (?,2,K). List of mutation profile groups (each itself a list), if 
+            multiple groups are given. If a single profile group is specified, 
+            then a single list, specifying the profile. Each group is defined by 
+            the list of mutation profile pairs, specified as a 2-tuple of binary 
+            k-tuples.
     """
     # Get total expression and counts for each pairwise mutation profile.
     tot_exp_by_idx, counts_by_idx = compute_total_expression_by_pairwise_mutation(
@@ -398,11 +447,23 @@ def compute_expression_shift_by_pairwise_mutation(
             for j in range(nidxs):
                 profile_j = int_to_binary_arr(j, segment_size)
                 profile_groups.append([(profile_i, profile_j)])
+        nesting_depth = 4
     else:
         # Otherwise, check that the given group of profiles is consistent.
-        nprofile_groups = len(profile_groups)
+        nesting_depth = get_nested_depth(profile_groups)
+        if nesting_depth == 4:
+            nprofile_groups = len(profile_groups)
+        elif nesting_depth == 3:
+            nprofile_groups = 1
+            profile_groups = [profile_groups]
+        elif nesting_depth == 2:
+            nprofile_groups = 1
+            profile_groups = [[profile_groups]]
+            assert len(profile_groups)
+        else:
+            msg = f"Cannot handle given profile groups: {profile_groups}"
+            raise RuntimeError(msg)
         profile_groups = [np.array(x) for x in profile_groups]
-        # TODO: Include some checks
 
     total_expression = np.zeros([nprofile_groups, seq_length, seq_length])
     counts = np.zeros([nprofile_groups, seq_length, seq_length])
@@ -416,7 +477,11 @@ def compute_expression_shift_by_pairwise_mutation(
     # Compute the average expression
     mean_expression = total_expression / counts
     expression_shift = mean_expression - mean_wildtype_expression
-    return expression_shift, profile_groups
+    
+    if nesting_depth < 4:
+        return expression_shift[0], profile_groups[0]
+    else:
+        return expression_shift, profile_groups
 
 
 #####################
@@ -470,52 +535,3 @@ def compute_mutualinfo_mutation_vs_expression_shift(
             )
 
     return mut_info, p
-
-# def compute_pairwise_segmented_mean_expression(
-#         sequences,
-#         expression,
-#         wt_seq,
-#         segment_size,
-# ):
-#     """Compute the pairwise average expression level resulting from a mutation,
-#     across segments of a fixed size.
-
-#     """
-#     nseqs, nbases = sequences.shape
-#     mut_screen = compare_sequences(sequences, wt_seq)
-
-#     segments = get_segments(
-#         sequences, segment_size, 
-#         startpos=0, 
-#         stride=segment_size
-#     )
-
-#     nsegments = segments.shape[0]
-
-#     mut_screen_over_segments = np.array(
-#         [mut_screen[i,segments] for i in range(nseqs)]
-#     )
-
-#     # Each length k segment's binary string mutation profile corresponds to an 
-#     # index in [0, 2**k).
-#     nidxs = 2**segment_size
-#     weights = 1 << np.arange(segment_size)[::-1]
-#     mutation_profiles = mut_screen_over_segments @ weights
-
-#     # We now need to loop over the segments, and compute the expression.
-#     mean_exp_by_index = np.zeros([nidxs, nidxs, nsegments, nsegments])
-#     for mutidx1 in range(nidxs):
-#         idx_screen1 = mutation_profiles == mutidx1
-#         for mutidx2 in range(nidxs):
-#             idx_screen2 = mutation_profiles == mutidx2
-#             joint_screen = np.bitwise_and(
-#                 idx_screen1[:, :, None], 
-#                 idx_screen2[:, None, :]
-#             )
-#             exp_levels = joint_screen * expression[:,None,None]
-#             mean_exp_by_index[mutidx1, mutidx2,:,:] = np.sum(
-#                 exp_levels,
-#                 axis=0
-#             ) / joint_screen.sum(0)
-
-#     return mean_exp_by_index
