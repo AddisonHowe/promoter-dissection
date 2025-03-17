@@ -27,7 +27,7 @@ def plot_data(
     # Generate x values for binned data
     x = np.arange(num_bins) * bin_size * segment_size
 
-    colors = ['red' if value < 0 else 'blue' for value in binned_vals]
+    colors = ['red' if value > 0 else 'blue' for value in binned_vals]
     bin_width = bin_size * segment_size
     ax.bar(x, binned_vals, width=bin_width, color=colors, align='edge')
 
@@ -48,19 +48,20 @@ def plot_data_2d(
         values,
         nan_color='k',
         norm=True,
+        vmax=None,
         **kwargs,
 ):
     """Convenience plotting function for 2D segmented expression data."""
     fig, ax = plt.subplots(1, 1, figsize=kwargs.get('figsize', None))
     
-    cmap = kwargs.get('cmap', plt.cm.bwr_r.copy())
+    cmap = kwargs.get('cmap', plt.cm.bwr.copy())
     if isinstance(cmap, str):
         cmap = plt.cm.get_cmap(cmap)
     if nan_color:
         cmap.set_bad(color=nan_color)
 
     if norm:
-        vmax = np.nanmax(np.abs(values))
+        vmax = np.nanmax(np.abs(values)) if vmax is None else vmax
         norm = TwoSlopeNorm(vmin=-vmax, vcenter=0, vmax=vmax)
     sc = ax.imshow(values.T, cmap=cmap, norm=norm)
     divider = make_axes_locatable(ax)
