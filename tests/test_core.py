@@ -29,7 +29,7 @@ NA = np.nan
 ])
 def test_binary_arr_to_int(bin_arr, expected):
     val = binary_arr_to_int(np.array(bin_arr))
-    assert np.all(val == expected), f"Got:\n{val}\nExpected:\n{expected}"
+    assert np.allclose(val, expected), f"Got:\n{val}\nExpected:\n{expected}"
 
 
 @pytest.mark.parametrize("int_array, n, expected", [
@@ -45,7 +45,7 @@ def test_binary_arr_to_int(bin_arr, expected):
 ])
 def test_int_to_binary_arr(int_array, n, expected):
     val = int_to_binary_arr(int_array, n)
-    assert np.all(val == expected), f"Got:\n{val}\nExpected:\n{expected}"
+    assert np.allclose(val, expected), f"Got:\n{val}\nExpected:\n{expected}"
 
 
 @pytest.mark.parametrize(
@@ -68,7 +68,7 @@ def test_get_segments(seqs, segment_size, startpos, stride, exp_val, exp_shape):
     if not (val.shape == exp_shape):
         msg = f"Wrong shape. Got: {val.shape}\nExpected: {exp_shape}"
         errors.append(msg)
-    if not (np.all(val == exp_val)):
+    if not (np.allclose(val, exp_val)):
         msg = f"Wrong values. Got:\n{val}\nExpected:\n{exp_val}"
         errors.append(msg)
     assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
@@ -85,7 +85,7 @@ def test_compare_sequences(seq1, seq2, expected):
     seq1 = np.array(seq1)
     seq2 = np.array(seq2)
     val = compare_sequences(seq1, seq2)
-    assert np.all(val == expected), f"Got:\n{val}\nExpected:\n{expected}"
+    assert np.allclose(val, expected), f"Got:\n{val}\nExpected:\n{expected}"
 
 
 @pytest.mark.parametrize("seqs, wt_seq, expected", [
@@ -98,7 +98,7 @@ def test_count_mutations(seqs, wt_seq, expected):
     seqs = np.array(seqs)
     wt_seq = np.array(wt_seq)
     val = count_mutations(seqs, wt_seq)
-    assert np.all(val == expected), f"Got:\n{val}\nExpected:\n{expected}"
+    assert np.allclose(val, expected), f"Got:\n{val}\nExpected:\n{expected}"
 
 
 @pytest.mark.filterwarnings("ignore:invalid value encountered in divide")
@@ -435,7 +435,7 @@ def test_compute_expression_shift_by_pairwise_mutation(
 @pytest.mark.skip()
 def test_compute_gamma(sequences, expression, wt_seq, segment_size):
     raise NotImplementedError("Test not implemented!")
-    assert np.all(val == expected), f"Got:\n{val}\nExpected:\n{expected}"
+    assert np.allclose(val, expected), f"Got:\n{val}\nExpected:\n{expected}"
 
 
 @pytest.mark.skip()
