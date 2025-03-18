@@ -12,5 +12,6 @@ dependencies:
   - tqdm=4.67.*
   - pip
   - pip:
-    - .[dev,jupyter,jax]
-    
+    - .
+    # - .[dev,jupyter,jax]  # include all optional dependencies
+    # - -e .[dev,jupyter,jax]  # include optional dependencies in editing mode

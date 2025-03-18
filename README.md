@@ -7,13 +7,22 @@ Clone the project repository:
 git clone https://github.com/AddisonHowe/promoter-dissection.git && cd promoter-dissection
 ```
 
-Create a conda environment from the `environment.yml` file.
-By default, installation includes optional dependencies for enabling JAX acceleration, jupyter notebooks, and test development.
-These can be excluded by editing the `environment.yml` file to remove the optional pip dependencies.
+Create a conda environment from the `environment.yml` file, and install all required dependencies.
 
 ```bash
 conda env create -n <env-name> -f environment.yml
 conda activate <env-name>
+```
+
+By default, installation excludes optional dependencies for enabling JAX acceleration, jupyter notebooks, and test development.
+These can be included by editing the `environment.yml` file to add the optional pip dependencies.
+Simply comment and uncomment the desired lines nested under `pip`.
+Alternatively, after activating the environment, rerun the pip installation with the desired options, for example:
+
+```bash
+conda activate <env-name>
+# Install optional dependencies and specify editable install.
+python -m pip install -e ".[jax,jupyter,dev]" 
 ```
 
 Assuming all optional dependencies have been installed, check that all tests pass via:
