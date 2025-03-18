@@ -1,7 +1,8 @@
-"""General helper functions
+"""General helper functions with JAX acceleration
 
 """
 
+import jax.numpy as jnp
 import numpy as np
 
 
@@ -9,7 +10,7 @@ def binary_arr_to_int(bin_arr):
     """Convert one or more binary arrays to integer value(s).
     """
     k = bin_arr.shape[-1]
-    weights = 1 << np.arange(k)[::-1]
+    weights = 1 << jnp.arange(k)[::-1]
     return bin_arr @ weights
 
 
@@ -51,6 +52,8 @@ def get_nested_depth(x):
         (int) : Number of layers n in the data x, so that the first item in x
             can be accessed via x[0][0]...[0] with n array accesses.
     """
-    if isinstance(x, (np.ndarray, list, tuple)):
-        return 1 + max([get_nested_depth(item) for item in x])
-    return 0  # base case, x is a single item
+    if np.isscalar(x) or jnp.isscalar(x):
+        return 0  # base case, x is a single item
+    # if isinstance(x, (np.ndarray, list, tuple)):
+        # return 1 + max([get_nested_depth(item[0]) for item in x])
+    return 1 + get_nested_depth(x[0])
