@@ -12,6 +12,28 @@ authors = [
   {name = "Addison Howe"},
   {name = "Joseph Landsittel"}
 ]
+dependencies = [
+  "numpy>=2.2",
+  "scipy>=1.15",
+  "pandas>=2.2",
+  "matplotlib>=3.10",
+  "cvxpy>=1.5",
+  "scikit-learn>=1.6",
+  "tqdm>=4.67",
+]
 
 [project.scripts]
 promdis = "promdis.__main__:main"
+
+[project.optional-dependencies]
+jax = [
+  "jax>=0.5",
+  "equinox>=0.11",
+]
+jupyter = [
+  "ipykernel",
+  "ipywidgets",
+]
+dev = [
+  "pytest>=8.3",
+]
