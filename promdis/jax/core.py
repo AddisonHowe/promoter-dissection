@@ -46,7 +46,6 @@ def compute_mean_wildtype_expression(
     num_wts = wt_screen.sum(axis=0)  # number of observed wildtype bases
     wt_counts = wt_screen * expression[:,None]
     mu_mean = wt_counts.sum(axis=0) / num_wts
-    # assert mu_mean.shape == (len(wt_seq),), "Bad shape"
     return mu_mean
 
 
@@ -85,7 +84,6 @@ def compute_mean_expression_shift(
     # shifts[i,j] is the difference between expression associated with sequence i 
     # and the mean expression level when position j is WT.
     shifts = expression[:,None] - wt_mean_expression[None,:]
-    # assert shifts.shape == (nseqs, nbases)
     
     # Want to average shift values over only the mutations at each base
     total_expression = (mut_screen * shifts).sum(0)
@@ -136,10 +134,6 @@ def compute_total_expression_by_mutation(
     )
 
     nsegments = segments.shape[0]
-
-    # mut_screen_over_segments = jnp.array(
-    #     [mut_screen[i,segments] for i in range(nseqs)]
-    # )
     mut_screen_over_segments = mut_screen[jnp.arange(nseqs)[:,None,None], segments]
 
     # Each length k segment's binary string mutation profile corresponds to an 
@@ -152,10 +146,6 @@ def compute_total_expression_by_mutation(
     counts_by_idx = jnp.zeros([nidxs, nsegments])
     for mutidx in range(nidxs):
         idx_screen = mutation_profiles == mutidx
-        # total_expression_by_idx[mutidx] = np.sum(
-        #     idx_screen * expression[:,None], axis=0
-        # )
-        # counts_by_idx[mutidx] = idx_screen.sum(0)
         total_expression_by_idx = total_expression_by_idx.at[mutidx].set(
             jnp.sum(idx_screen * expression[:,None], axis=0)
         )
@@ -270,7 +260,6 @@ def compute_expression_shift_by_mutation(
         elif nesting_depth == 1:
             nprofile_groups = 1
             profile_groups = [[profile_groups]]
-            # assert len(profile_groups)
         else:
             msg = f"Cannot handle given profile groups: {profile_groups}"
             raise RuntimeError(msg)
@@ -281,8 +270,6 @@ def compute_expression_shift_by_mutation(
     for group_idx, profile_group in enumerate(profile_groups):
         for profile in profile_group:
             idx = binary_arr_to_int(profile)
-            # total_expression[group_idx] += tot_exp_by_idx[idx]
-            # counts[group_idx] += counts_by_idx[idx]
             total_expression = total_expression.at[group_idx].add(tot_exp_by_idx[idx])
             counts = counts.at[group_idx].add(counts_by_idx[idx])
     
@@ -343,8 +330,6 @@ def compute_total_expression_by_pairwise_mutation(
     nidxs = 2**segment_size
     weights = 1 << jnp.arange(segment_size)[::-1]
     mutation_profiles = mut_screen_over_segments @ weights
-
-
     # Create boolean masks for all mutation profiles
     idx_screens = mutation_profiles[None,:,:] == jnp.arange(nidxs)[:,None,None]
     # Compute joint screens using broadcasting
@@ -358,23 +343,6 @@ def compute_total_expression_by_pairwise_mutation(
     )
     # Compute counts
     counts_by_idx = joint_screens.sum(axis=2)
-
-    # nsegments = segments.shape[0]
-    # total_expression_by_idx = jnp.zeros([nidxs, nidxs, nsegments, nsegments])
-    # counts_by_idx = jnp.zeros([nidxs, nidxs, nsegments, nsegments])
-    # for mutidx1 in range(nidxs):
-    #     idx_screen1 = mutation_profiles == mutidx1
-    #     for mutidx2 in range(nidxs):
-    #         idx_screen2 = mutation_profiles == mutidx2
-    #         joint_screen = jnp.bitwise_and(
-    #             idx_screen1[:, :, None], 
-    #             idx_screen2[:, None, :]
-    #         )
-    #         total_expression_by_idx = total_expression_by_idx.at[mutidx1,mutidx2,:,:].set(
-    #             jnp.sum(joint_screen * expression[:,None,None], axis=0)
-    #         )
-    #         counts_by_idx = counts_by_idx.at[mutidx1,mutidx2].set(joint_screen.sum(0))
-
     return total_expression_by_idx, counts_by_idx
 
 
@@ -480,7 +448,6 @@ def compute_expression_shift_by_pairwise_mutation(
         elif nesting_depth == 2:
             nprofile_groups = 1
             profile_groups = [[profile_groups]]
-            # assert len(profile_groups)
         else:
             msg = f"Cannot handle given profile groups: {profile_groups}"
             raise RuntimeError(msg)
@@ -500,22 +467,7 @@ def compute_expression_shift_by_pairwise_mutation(
         return counts_by_idx[idx1, idx2]
 
     # print("PROFILE GROUPS:\n", profile_groups)
-    for group_idx, profile_group in enumerate(profile_groups):
-        # print("PROFILE GROUP:\n", profile_group)
-        # for profile1, profile2 in profile_group:
-            # print("profile1:", profile1)
-            # print("profile2:", profile2)
-            # idx1 = binary_arr_to_int(profile1)  # binary mutation profile
-            # idx2 = binary_arr_to_int(profile2)  
-            # total_expression[group_idx] += tot_exp_by_idx[idx1, idx2]
-            # counts[group_idx] += counts_by_idx[idx1, idx2]
-            # total_expression = total_expression.at[group_idx].add(
-                # tot_exp_by_idx[idx1, idx2]
-            # )
-            # counts = counts.at[group_idx].add(
-                # counts_by_idx[idx1, idx2]
-            # )
-        # print(profile_group[:,0], profile_group[:,1])
+    for group_idx, profile_group in enumerate(profile_groups):        
         total_expression = total_expression.at[group_idx].set(
             jax.vmap(process_profile_exp)(
                 profile_group[:,0], profile_group[:,1]
@@ -559,7 +511,6 @@ def compute_mutualinfo_mutation_vs_expression_shift(
     # screen[i,j] asserts that expression level associated with of sequence i 
     # is greater than the mean expression level when position j is WT.
     increase_exp_screen = expression[:,None] > wt_mean_expression[None,:]
-    # assert increase_exp_screen.shape == (nseqs, nbases)
     
     # p_i[j,k] with j mutation status, k shift
     p = np.zeros([nbases, 2, 2])
@@ -574,7 +525,6 @@ def compute_mutualinfo_mutation_vs_expression_shift(
     p[:,1,1] = np.sum(mutation_screen & increase_exp_screen, axis=0)
     
     p /= nseqs
-    # assert np.allclose(p.sum(axis=(1,2)), 1), "Probabilities should sum to 1."
     
     # Marginal distributions
     p_marg_mut = p.sum(axis=2)

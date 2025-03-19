@@ -54,6 +54,4 @@ def get_nested_depth(x):
     """
     if np.isscalar(x) or jnp.isscalar(x):
         return 0  # base case, x is a single item
-    # if isinstance(x, (np.ndarray, list, tuple)):
-        # return 1 + max([get_nested_depth(item[0]) for item in x])
     return 1 + get_nested_depth(x[0])
