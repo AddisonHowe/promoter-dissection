@@ -18,7 +18,6 @@ import equinox as eqx
 
 from promdis.processing import get_sequence_arrays_and_counts, gene_seq_to_array
 from promdis.jax.core import compute_expression_shift_by_mutation
-from promdis.jax.core import compute_expression_shift_by_pairwise_mutation
 from promdis.pl import plot_data
 
 #######################
@@ -32,6 +31,7 @@ parser.add_argument('-n', '--nboot', type=int, default=20)
 parser.add_argument('--wt_path', type=str, default="data/wtsequences.csv")
 parser.add_argument('-o', '--outdir', type=str, default="out/bootstrapping_1d")
 parser.add_argument('--seed', type=int, default=None)
+parser.add_argument('--pbar', action='store_true')
 parser.add_argument('--sep', type=str, default=None, 
                         help="Input file column separator.")
 args = parser.parse_args()
@@ -43,6 +43,7 @@ WT_GENES_FPATH = args.wt_path
 OUTDIR = args.outdir
 SEED = args.seed
 sep = args.sep
+disable_pbar = not args.pbar
 
 ALPHA = 0.05
 
@@ -134,7 +135,7 @@ def bootstrap_computations(seqs, expression, wt_seq, key):
 print("Generating bootstrap data...")
 xis_boot = jnp.zeros([N_BOOT, *xi_data.shape])
 time0 = time.time()
-for i in tqdm.trange(N_BOOT):
+for i in tqdm.trange(N_BOOT, disable=disable_pbar):
     key, subkey = jrandom.split(key, 2)
     boot_xi_1mut = bootstrap_computations(
         seqs, expression, wt_seq, subkey
