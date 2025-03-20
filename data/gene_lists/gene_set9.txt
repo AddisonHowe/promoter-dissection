@@ -1,0 +1,10 @@
+tar
+dpiBA
+araAB
+araC
+xylF
+xylA
+dicA
+dicC
+dicB
+ompR

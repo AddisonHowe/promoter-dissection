@@ -1,4 +1,4 @@
-"""Epistasis
+"""Bootstrapping (1-dimensional)
 
 """
 
@@ -19,7 +19,7 @@ import equinox as eqx
 from promdis.processing import get_sequence_arrays_and_counts, gene_seq_to_array
 from promdis.jax.core import compute_expression_shift_by_mutation
 from promdis.jax.core import compute_expression_shift_by_pairwise_mutation
-from promdis.pl import plot_data_2d
+from promdis.pl import plot_data
 
 #######################
 ##  Parse arguments  ##
@@ -30,7 +30,7 @@ parser.add_argument('-i', '--infile', type=str, required=True)
 parser.add_argument('-g', '--gene', type=str, required=True)
 parser.add_argument('-n', '--nboot', type=int, default=20)
 parser.add_argument('--wt_path', type=str, default="data/wtsequences.csv")
-parser.add_argument('-o', '--outdir', type=str, default="out/epistasis")
+parser.add_argument('-o', '--outdir', type=str, default="out/bootstrapping_1d")
 parser.add_argument('--seed', type=int, default=None)
 parser.add_argument('--sep', type=str, default=None, 
                         help="Input file column separator.")
@@ -78,51 +78,25 @@ wt_seq = gene_seq_to_array(gene_wt_seq)
 
 
 ##################################################
-##  Compute epistasis effect for observed data  ##
+##  Compute expression shift for observed data  ##
 ##################################################
 
 # All instances with one mutation at a single position. 
-xi1_mut, _ = compute_expression_shift_by_mutation(
+xi_data, _ = compute_expression_shift_by_mutation(
     seqs, expression, wt_seq, 
     segment_size=1,
     profile_groups=[(1,)]
 )
 
-# All instances with one mutation on both segments.
-xi_2mut, _ = compute_expression_shift_by_pairwise_mutation(
-    seqs, expression, wt_seq,
-    segment_size=1,
-    profile_groups=[((1,),(1,))],
-)
-
-# Difference between two-segment mutations and *two* one-segment mutations
-eta = xi_2mut - xi1_mut[None,:] - xi1_mut[:,None]
-print("eta contains nan?: ", np.any(np.isnan(eta)))
 
 # Plotting 
-ax = plot_data_2d(
-    xi_2mut,
+ax = plot_data(
+    xi_data,
+    segment_size=1,
     cmap='RdBu',
 )
-ax.set_title("$\\xi[i,j]$ for 2 mutations across 2 segments")
-plt.savefig(f"{IMGDIR}/xi_pairwise.pdf")
-plt.close()
-
-ax = plot_data_2d(
-    eta,
-    cmap='RdBu',
-)
-ax.set_title("$\\eta[i,j]$")
-plt.savefig(f"{IMGDIR}/eta.pdf")
-plt.close()
-
-ax = plot_data_2d(
-    eta,
-    cmap='RdBu',
-    vmax=0.3,
-)
-ax.set_title("$\\eta[i,j]$")
-plt.savefig(f"{IMGDIR}/eta_vmax_03.pdf")
+ax.set_title("$\\xi_i$")
+plt.savefig(f"{IMGDIR}/xi_data.pdf")
 plt.close()
 
 
@@ -140,6 +114,7 @@ def generate_bootstrapped_data(
     boot_expression = expression[idxs]
     return boot_seqs, boot_expression
 
+
 @eqx.filter_jit
 def bootstrap_computations(seqs, expression, wt_seq, key):
     boot_seqs, boot_expression = generate_bootstrapped_data(
@@ -147,34 +122,24 @@ def bootstrap_computations(seqs, expression, wt_seq, key):
     )
 
     # All instances with one mutation at a single position. 
-    xi1_mut, _ = compute_expression_shift_by_mutation(
+    xi_1mut, _ = compute_expression_shift_by_mutation(
         boot_seqs, boot_expression, wt_seq, 
         segment_size=1,
         profile_groups=[(1,)]
     )
 
-    # All instances with one mutation on both segments.
-    xi_2mut, _ = compute_expression_shift_by_pairwise_mutation(
-        boot_seqs, boot_expression, wt_seq, 
-        segment_size=1,
-        profile_groups=[((1,),(1,))],
-    )
-    # Compute eta
-    eta = xi_2mut - xi1_mut[None,:] - xi1_mut[:,None]
-    return eta, xi1_mut, xi_2mut
+    return xi_1mut
 
 
 print("Generating bootstrap data...")
-xis_boot = jnp.zeros([N_BOOT, *xi_2mut.shape])
-etas_boot = jnp.zeros([N_BOOT, *eta.shape])
+xis_boot = jnp.zeros([N_BOOT, *xi_data.shape])
 time0 = time.time()
-for i in tqdm.trange(N_BOOT, disable=True):
+for i in tqdm.trange(N_BOOT):
     key, subkey = jrandom.split(key, 2)
-    boot_eta, boot_xi1_mut, boot_xi_2mut = bootstrap_computations(
+    boot_xi_1mut = bootstrap_computations(
         seqs, expression, wt_seq, subkey
     )
-    xis_boot = xis_boot.at[i].set(boot_xi_2mut)
-    etas_boot = etas_boot.at[i].set(boot_eta)
+    xis_boot = xis_boot.at[i].set(boot_xi_1mut)
 
 time1 = time.time()
 print(f"Completed bootstrapping in {time1-time0:.3f} sec.")
@@ -189,49 +154,53 @@ np.save(f"{OUTDIR}/xi_boot_ci_lower.npy", xi_boot_ci_lower)
 np.save(f"{OUTDIR}/xi_boot_ci_upper.npy", xi_boot_ci_upper)
 np.save(f"{OUTDIR}/xi_boot_median.npy", xi_boot_median)
 
-eta_boot_ci_lower = np.nanpercentile(etas_boot, 100*ALPHA/2, axis=0)
-eta_boot_ci_upper = np.nanpercentile(etas_boot, 100*(1-ALPHA/2), axis=0)
-eta_boot_median = np.nanpercentile(etas_boot, 50, axis=0)
-np.save(f"{OUTDIR}/eta_boot_ci_lower.npy", eta_boot_ci_lower)
-np.save(f"{OUTDIR}/eta_boot_ci_upper.npy", eta_boot_ci_upper)
-np.save(f"{OUTDIR}/eta_boot_median.npy", eta_boot_median)
-
 
 ################
 ##  Plotting  ##
 ################
 
-ax = plot_data_2d(
-    xi_boot_median
+ax = plot_data(
+    xi_boot_median,
+    segment_size=1,
 )
-ax.set_title(f"Boostrapped $\\xi_{{i,j}}$")
+ax.set_title(f"Boostrapped $\\xi_{{i}}$")
 plt.savefig(f"{IMGDIR}/bootstrapped_xi_median.pdf")
 plt.close()
 
-
 # Plot only regions where confident
 conf_screen = xi_boot_ci_lower * xi_boot_ci_upper > 0
-ax = plot_data_2d(
+ax = plot_data(
     np.where(conf_screen, xi_boot_median, 0.),
+    segment_size=1,
 )
-ax.set_title(f"Boostrapped $\\xi_{{i,j}}$")
+ax.set_title(f"Boostrapped $\\xi_{{i}}$")
 plt.savefig(f"{IMGDIR}/bootstrapped_xi_confident.pdf")
 plt.close()
 
+# Main plot
+fig, ax = plt.subplots(1, 1)
+xs = np.arange(1, len(xi_data) + 1)
 
-ax = plot_data_2d(
-    eta_boot_median
-)
-ax.set_title(f"Boostrapped $\\eta_{{i,j}}$")
-plt.savefig(f"{IMGDIR}/bootstrapped_eta_median.pdf")
-plt.close()
+for i in range(N_BOOT):
+    xi = xis_boot[i]
+    colors = ['b' if v < 0 else 'r' for v in xi]
+    ax.scatter(xs, xi, color=colors, s=1, alpha=0.1, rasterized=True)
 
+ax.scatter(xs, xi_boot_ci_lower, color='k', alpha=0.5, s=5, marker='_')
+ax.scatter(xs, xi_boot_ci_upper, color='k', alpha=0.5, s=5, marker='_')
 
-# Plot only regions where confident
-conf_screen = eta_boot_ci_lower * eta_boot_ci_upper > 0
-ax = plot_data_2d(
-    np.where(conf_screen, eta_boot_median, 0.),
-)
-ax.set_title(f"Boostrapped $\\eta_{{i,j}}$")
-plt.savefig(f"{IMGDIR}/bootstrapped_eta_confident.pdf")
+conf_screen = xi_boot_ci_lower * xi_boot_ci_upper > 0
+
+colors = []
+for i in range(len(conf_screen)):
+    if conf_screen[i]:
+        v = xi_data[i]
+        colors.append('cyan' if v < 0 else 'purple')
+    else:
+        colors.append('grey')
+
+ax.scatter(xs, xi_data, color=colors, alpha=1, s=10)
+
+ax.set_title("Bootstrapped $\\xi_i$");
+plt.savefig(f"{IMGDIR}/bootstrapped_xi.pdf")
 plt.close()
