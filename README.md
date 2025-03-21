@@ -26,7 +26,6 @@ python -m pip install -e ".[jax,jupyter,dev]"
 ```
 
 Assuming all optional dependencies have been installed, check that all tests pass via:
-
 ```bash
 conda activate <env-name>
 pytest tests
