@@ -1,10 +1,5 @@
-yedK
-holC
-aegA
-rapA
-dusC
-fdhE
-dnaE_start1
-dnaE_start2
-ycgB
-yehS
+aphA
+bdcR
+yncD
+rumB
+yagH
