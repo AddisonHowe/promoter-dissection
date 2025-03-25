@@ -451,7 +451,7 @@ def compute_expression_shift_by_pairwise_mutation(
         else:
             msg = f"Cannot handle given profile groups: {profile_groups}"
             raise RuntimeError(msg)
-        profile_groups = jnp.array([jnp.array(x) for x in profile_groups])
+        profile_groups = [jnp.array(x) for x in profile_groups]
 
     total_expression = jnp.zeros([nprofile_groups, seq_length, seq_length])
     counts = jnp.zeros([nprofile_groups, seq_length, seq_length])

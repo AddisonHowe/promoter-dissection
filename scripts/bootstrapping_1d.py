@@ -11,7 +11,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 import jax
-jax.config.update("jax_enable_x64", False)  # TODO: use float64
 import jax.numpy as jnp
 import jax.random as jrandom
 import equinox as eqx
@@ -32,8 +31,11 @@ parser.add_argument('--wt_path', type=str, default="data/wtsequences.csv")
 parser.add_argument('-o', '--outdir', type=str, default="out/bootstrapping_1d")
 parser.add_argument('--seed', type=int, default=None)
 parser.add_argument('--pbar', action='store_true')
+parser.add_argument('--float64', action='store_true')
 parser.add_argument('--sep', type=str, default=None, 
                         help="Input file column separator.")
+parser.add_argument('--img_format', type=str, choices=['pdf', 'png'], 
+                    default='pdf', help="Format for output images.")
 args = parser.parse_args()
 
 FPATH = args.infile  # "data/expression_data/ykgE_dataset_combined.csv"
@@ -44,12 +46,23 @@ OUTDIR = args.outdir
 SEED = args.seed
 sep = args.sep
 disable_pbar = not args.pbar
+use_float64 = args.float64
+img_format = args.img_format
+
+if use_float64:
+    print("Using dtype float64")
+    jax.config.update("jax_enable_x64", True)
 
 ALPHA = 0.05
 
 IMGDIR = f"{args.outdir}/images"
 os.makedirs(OUTDIR, exist_ok=True)
 os.makedirs(IMGDIR, exist_ok=True)
+
+if SEED is None:
+    SEED = np.random.randint(1, 10**12)
+print(f"Seed: {SEED}")
+np.savetxt(f"{OUTDIR}/seed.txt", [SEED], fmt='%d')
 rng = np.random.default_rng(seed=SEED)
 key = jrandom.PRNGKey(seed=rng.integers(2**32))
 
@@ -89,15 +102,18 @@ xi_data, _ = compute_expression_shift_by_mutation(
     profile_groups=[(1,)]
 )
 
+# Save results
+np.save(f"{OUTDIR}/xi_data.npy", xi_data)
+
 
 # Plotting 
 ax = plot_data(
     xi_data,
     segment_size=1,
-    cmap='RdBu',
+    cmap='RdBu_r',
 )
 ax.set_title("$\\xi_i$")
-plt.savefig(f"{IMGDIR}/xi_data.pdf")
+plt.savefig(f"{IMGDIR}/xi_data.{img_format}")
 plt.close()
 
 
@@ -165,7 +181,7 @@ ax = plot_data(
     segment_size=1,
 )
 ax.set_title(f"Boostrapped $\\xi_{{i}}$")
-plt.savefig(f"{IMGDIR}/bootstrapped_xi_median.pdf")
+plt.savefig(f"{IMGDIR}/bootstrapped_xi_median.{img_format}")
 plt.close()
 
 # Plot only regions where confident
@@ -175,7 +191,7 @@ ax = plot_data(
     segment_size=1,
 )
 ax.set_title(f"Boostrapped $\\xi_{{i}}$")
-plt.savefig(f"{IMGDIR}/bootstrapped_xi_confident.pdf")
+plt.savefig(f"{IMGDIR}/bootstrapped_xi_confident.{img_format}")
 plt.close()
 
 # Main plot
@@ -203,5 +219,5 @@ for i in range(len(conf_screen)):
 ax.scatter(xs, xi_data, color=colors, alpha=1, s=10)
 
 ax.set_title("Bootstrapped $\\xi_i$");
-plt.savefig(f"{IMGDIR}/bootstrapped_xi.pdf")
+plt.savefig(f"{IMGDIR}/bootstrapped_xi.{img_format}")
 plt.close()

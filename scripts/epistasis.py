@@ -11,7 +11,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 import jax
-jax.config.update("jax_enable_x64", False)  # TODO: use float64
 import jax.numpy as jnp
 import jax.random as jrandom
 import equinox as eqx
@@ -33,8 +32,11 @@ parser.add_argument('--wt_path', type=str, default="data/wtsequences.csv")
 parser.add_argument('-o', '--outdir', type=str, default="out/epistasis")
 parser.add_argument('--seed', type=int, default=None)
 parser.add_argument('--pbar', action='store_true')
+parser.add_argument('--float64', action='store_true')
 parser.add_argument('--sep', type=str, default=None, 
                         help="Input file column separator.")
+parser.add_argument('--img_format', type=str, choices=['pdf', 'png'], 
+                    default='pdf', help="Format for output images.")
 args = parser.parse_args()
 
 FPATH = args.infile  # "data/expression_data/ykgE_dataset_combined.csv"
@@ -45,12 +47,23 @@ OUTDIR = args.outdir
 SEED = args.seed
 sep = args.sep
 disable_pbar = not args.pbar
+use_float64 = args.float64
+img_format = args.img_format
 
+if use_float64:
+    print("Using dtype float64")
+    jax.config.update("jax_enable_x64", True)
+    
 ALPHA = 0.05
 
 IMGDIR = f"{args.outdir}/images"
 os.makedirs(OUTDIR, exist_ok=True)
 os.makedirs(IMGDIR, exist_ok=True)
+
+if SEED is None:
+    SEED = np.random.randint(1, 10**12)
+print(f"Seed: {SEED}")
+np.savetxt(f"{OUTDIR}/seed.txt", [SEED], fmt='%d')
 rng = np.random.default_rng(seed=SEED)
 key = jrandom.PRNGKey(seed=rng.integers(2**32))
 
@@ -84,7 +97,7 @@ wt_seq = gene_seq_to_array(gene_wt_seq)
 ##################################################
 
 # All instances with one mutation at a single position. 
-xi1_mut, _ = compute_expression_shift_by_mutation(
+xi_1mut, _ = compute_expression_shift_by_mutation(
     seqs, expression, wt_seq, 
     segment_size=1,
     profile_groups=[(1,)]
@@ -98,33 +111,38 @@ xi_2mut, _ = compute_expression_shift_by_pairwise_mutation(
 )
 
 # Difference between two-segment mutations and *two* one-segment mutations
-eta = xi_2mut - xi1_mut[None,:] - xi1_mut[:,None]
+eta = xi_2mut - xi_1mut[None,:] - xi_1mut[:,None]
 print("eta contains nan?: ", np.any(np.isnan(eta)))
+
+# Save results
+np.save(f"{OUTDIR}/xi_1mut.npy", xi_1mut)
+np.save(f"{OUTDIR}/xi_2mut.npy", xi_2mut)
+np.save(f"{OUTDIR}/eta.npy", eta)
 
 # Plotting 
 ax = plot_data_2d(
     xi_2mut,
-    cmap='RdBu',
+    cmap='RdBu_r',
 )
 ax.set_title("$\\xi[i,j]$ for 2 mutations across 2 segments")
-plt.savefig(f"{IMGDIR}/xi_pairwise.pdf")
+plt.savefig(f"{IMGDIR}/xi_pairwise.{img_format}")
 plt.close()
 
 ax = plot_data_2d(
     eta,
-    cmap='RdBu',
+    cmap='RdBu_r',
 )
 ax.set_title("$\\eta[i,j]$")
-plt.savefig(f"{IMGDIR}/eta.pdf")
+plt.savefig(f"{IMGDIR}/eta.{img_format}")
 plt.close()
 
 ax = plot_data_2d(
     eta,
-    cmap='RdBu',
+    cmap='RdBu_r',
     vmax=0.3,
 )
 ax.set_title("$\\eta[i,j]$")
-plt.savefig(f"{IMGDIR}/eta_vmax_03.pdf")
+plt.savefig(f"{IMGDIR}/eta_vmax_03.{img_format}")
 plt.close()
 
 
@@ -149,7 +167,7 @@ def bootstrap_computations(seqs, expression, wt_seq, key):
     )
 
     # All instances with one mutation at a single position. 
-    xi1_mut, _ = compute_expression_shift_by_mutation(
+    xi_1mut, _ = compute_expression_shift_by_mutation(
         boot_seqs, boot_expression, wt_seq, 
         segment_size=1,
         profile_groups=[(1,)]
@@ -162,8 +180,8 @@ def bootstrap_computations(seqs, expression, wt_seq, key):
         profile_groups=[((1,),(1,))],
     )
     # Compute eta
-    eta = xi_2mut - xi1_mut[None,:] - xi1_mut[:,None]
-    return eta, xi1_mut, xi_2mut
+    eta = xi_2mut - xi_1mut[None,:] - xi_1mut[:,None]
+    return eta, xi_1mut, xi_2mut
 
 
 print("Generating bootstrap data...")
@@ -172,7 +190,7 @@ etas_boot = jnp.zeros([N_BOOT, *eta.shape])
 time0 = time.time()
 for i in tqdm.trange(N_BOOT, disable=disable_pbar):
     key, subkey = jrandom.split(key, 2)
-    boot_eta, boot_xi1_mut, boot_xi_2mut = bootstrap_computations(
+    boot_eta, boot_xi_1mut, boot_xi_2mut = bootstrap_computations(
         seqs, expression, wt_seq, subkey
     )
     xis_boot = xis_boot.at[i].set(boot_xi_2mut)
@@ -207,7 +225,7 @@ ax = plot_data_2d(
     xi_boot_median
 )
 ax.set_title(f"Boostrapped $\\xi_{{i,j}}$")
-plt.savefig(f"{IMGDIR}/bootstrapped_xi_median.pdf")
+plt.savefig(f"{IMGDIR}/bootstrapped_xi_median.{img_format}")
 plt.close()
 
 
@@ -217,7 +235,7 @@ ax = plot_data_2d(
     np.where(conf_screen, xi_boot_median, 0.),
 )
 ax.set_title(f"Boostrapped $\\xi_{{i,j}}$")
-plt.savefig(f"{IMGDIR}/bootstrapped_xi_confident.pdf")
+plt.savefig(f"{IMGDIR}/bootstrapped_xi_confident.{img_format}")
 plt.close()
 
 
@@ -225,7 +243,7 @@ ax = plot_data_2d(
     eta_boot_median
 )
 ax.set_title(f"Boostrapped $\\eta_{{i,j}}$")
-plt.savefig(f"{IMGDIR}/bootstrapped_eta_median.pdf")
+plt.savefig(f"{IMGDIR}/bootstrapped_eta_median.{img_format}")
 plt.close()
 
 
@@ -235,5 +253,5 @@ ax = plot_data_2d(
     np.where(conf_screen, eta_boot_median, 0.),
 )
 ax.set_title(f"Boostrapped $\\eta_{{i,j}}$")
-plt.savefig(f"{IMGDIR}/bootstrapped_eta_confident.pdf")
+plt.savefig(f"{IMGDIR}/bootstrapped_eta_confident.{img_format}")
 plt.close()

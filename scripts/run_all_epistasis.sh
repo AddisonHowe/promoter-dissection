@@ -11,6 +11,11 @@
 # EXAMPLE: sh run_all_epistasis.sh data/regseq_data ykgE
 #=============================================================================
 
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <datdir> <gene>"
+    exit 1
+fi
+
 datdir=$1
 gene=$2
 
