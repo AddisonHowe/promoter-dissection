@@ -1,0 +1,247 @@
+"""Basic plots
+
+"""
+
+import argparse
+import os
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+import jax
+
+from promdis.processing import get_sequence_arrays_and_counts, gene_seq_to_array
+from promdis.jax.helpers import int_to_binary_arr
+from promdis.jax.core import compute_mean_expression_by_mutation
+from promdis.jax.core import compute_mean_expression_by_pairwise_mutation
+from promdis.jax.core import compute_expression_shift_by_mutation
+from promdis.jax.core import compute_expression_shift_by_pairwise_mutation
+from promdis.pl import plot_data, plot_data_2d
+
+#######################
+##  Parse arguments  ##
+#######################
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', '--infile', type=str, required=True)
+parser.add_argument('-g', '--gene', type=str, required=True)
+parser.add_argument('--wt_path', type=str, default="data/wtsequences.csv")
+parser.add_argument('-o', '--outdir', type=str, default="out/basic_plots")
+parser.add_argument('--float64', action='store_true')
+parser.add_argument('--sep', type=str, default=None, 
+                        help="Input file column separator.")
+parser.add_argument('--img_format', type=str, choices=['pdf', 'png'], 
+                    default='pdf', help="Format for output images.")
+args = parser.parse_args()
+
+FPATH = args.infile  # "data/expression_data/ykgE_dataset_combined.csv"
+GENE = args.gene  # "ykgE"
+WT_GENES_FPATH = args.wt_path
+OUTDIR = args.outdir
+sep = args.sep
+use_float64 = args.float64
+img_format = args.img_format
+
+if use_float64:
+    print("Using dtype float64")
+    jax.config.update("jax_enable_x64", True)
+    
+IMGDIR = f"{args.outdir}/images"
+os.makedirs(OUTDIR, exist_ok=True)
+os.makedirs(IMGDIR, exist_ok=True)
+
+
+###############################################
+##  Load data and compute expression values  ##
+###############################################
+
+df = pd.read_csv(FPATH, sep=sep)
+df['barcode'] = df['seq'].str.slice(160,)
+df['promoter'] = df['seq'].str.slice(0, 160)
+df
+seqs, counts_dna, counts_rna = get_sequence_arrays_and_counts(
+    df, key_promoter='promoter', key_rna='ct_1', key_dna='ct_0'
+)
+expression = counts_rna / (counts_dna + counts_rna)
+
+# Load wildtype data
+wildtype_genes_df = pd.read_csv(WT_GENES_FPATH)
+wt_gene_sequences = {
+    g: wildtype_genes_df.loc[wildtype_genes_df['name'] == g,'geneseq'].values[0]
+    for g in wildtype_genes_df['name'].unique()
+}
+gene_wt_seq = wt_gene_sequences[GENE]
+nbases = len(gene_wt_seq)
+wt_seq = gene_seq_to_array(gene_wt_seq)
+
+
+###############################################################
+##  Compute mean expression levels for wildtype and mutants  ##
+###############################################################
+
+#~~~  Singlets  ~~~#
+mus_single = compute_mean_expression_by_mutation(
+    seqs, expression, wt_seq, segment_size=1,
+)
+
+ax = plot_data(
+    mus_single[0], segment_size=1, bin_size=1,
+    color='green'
+)
+ax.set_title(f"$\\mu_i^*$ (singlets)")
+plt.savefig(f"{IMGDIR}/mu_singlet_wildtype.{img_format}")
+plt.close()
+
+ax = plot_data(
+    mus_single[1], segment_size=1, bin_size=1,
+    color='green'
+)
+ax.set_title(f"$\\mu_i[1]$ (singlets)")
+plt.savefig(f"{IMGDIR}/mu_singlet_mutant.{img_format}")
+plt.close()
+
+#~~~  Doublets  ~~~#
+mus_double = compute_mean_expression_by_mutation(
+    seqs, expression, wt_seq, segment_size=2,
+)
+ax = plot_data(
+    mus_double[0], segment_size=2, bin_size=1,
+    color='green'
+)
+ax.set_title(f"$\\mu_i^*$ (doublets)")
+plt.savefig(f"{IMGDIR}/mu_doublet_wildtype.{img_format}")
+plt.close()
+
+ax = plot_data(
+    mus_double[1], segment_size=2, bin_size=1,
+    color='green'
+)
+ax.set_title(f"$\\mu_i[01]$ (doublets)")
+plt.savefig(f"{IMGDIR}/mu_doublet_mutant_01.{img_format}")
+plt.close()
+
+ax = plot_data(
+    mus_double[2], segment_size=2, bin_size=1,
+    color='green'
+)
+ax.set_title(f"$\\mu_i[10]$ (doublets)")
+plt.savefig(f"{IMGDIR}/mu_doublet_mutant_10.{img_format}")
+plt.close()
+
+ax = plot_data(
+    mus_double[3], segment_size=2, bin_size=1,
+    color='green'
+)
+ax.set_title(f"$\\mu_i[11]$ (doublets)")
+plt.savefig(f"{IMGDIR}/mu_doublet_mutant_11.{img_format}")
+plt.close()
+
+
+########################################################################
+##  Compute pairwise mean expression levels for wildtype and mutants  ##
+########################################################################
+
+#~~~  Singlets  ~~~#
+pairwise_mus_single = compute_mean_expression_by_pairwise_mutation(
+    seqs, expression, wt_seq, segment_size=1,
+)
+
+ax = plot_data_2d(
+    pairwise_mus_single[0][0], cmap='viridis', norm=None,
+)
+ax.set_title(f"$\\mu_{{i,j}}^{{**}}$ (singlets)")
+plt.savefig(f"{IMGDIR}/pairwise_mu_singlet_wildtype.{img_format}")
+plt.close()
+
+profiles = [(0,1), (1,0), (1,1)]
+for i, j in profiles:
+    ax = plot_data_2d(
+        pairwise_mus_single[i][j], cmap='viridis', norm=None,
+    )
+    ax.set_title(f"$\\mu_{{i,j}}[{i},{j}]$")
+    plt.savefig(f"{IMGDIR}/pairwise_mu_singlet_mutant_{i}_{j}.{img_format}")
+    plt.close()
+
+#~~~  Doublets  ~~~#
+pairwise_mus_double = compute_mean_expression_by_pairwise_mutation(
+    seqs, expression, wt_seq, segment_size=2,
+)
+
+ax = plot_data_2d(
+    pairwise_mus_double[0], cmap='viridis',  norm=None,
+)
+ax.set_title(f"$\\mu_{{i,j}}^{{**}}$ (doublets)")
+plt.savefig(f"{IMGDIR}/pairwise_mu_doublet_wildtype.{img_format}")
+plt.close()
+
+profiles = [
+    (0,1),
+    (1,0),
+    (1,1),
+]
+for i, j in profiles:
+    ax = plot_data_2d(
+        pairwise_mus_double[i][j], cmap='viridis', norm=None,
+    )
+    b1 = "".join(map(str, int_to_binary_arr(i, n=2)))
+    b2 = "".join(map(str, int_to_binary_arr(j, n=2)))
+    ax.set_title(f"$\\mu_{{i,j}}[{b1},{b2}]$")
+    plt.savefig(f"{IMGDIR}/pairwise_mu_doublet_mutant_{b1}_{b2}.{img_format}")
+    plt.close()
+
+
+#################################################################
+##  Compute expression shifts and epistasis effect (singlets)  ##
+#################################################################
+
+# All instances with one mutation at a single position. 
+xi_1mut, _ = compute_expression_shift_by_mutation(
+    seqs, expression, wt_seq, 
+    segment_size=1,
+    profile_groups=[(1,)]
+)
+
+# All instances with one mutation on both segments.
+xi_2mut, _ = compute_expression_shift_by_pairwise_mutation(
+    seqs, expression, wt_seq,
+    segment_size=1,
+    profile_groups=[((1,),(1,))],
+)
+
+# Difference between two-segment mutations and *two* one-segment mutations
+eta = xi_2mut - xi_1mut[None,:] - xi_1mut[:,None]
+print("eta contains nan?: ", np.any(np.isnan(eta)))
+
+# Plotting 
+ax = plot_data(
+    xi_1mut, segment_size=1, bin_size=1,
+    cmap='RdBu_r',
+)
+ax.set_title("$\\xi_{i}$")
+plt.savefig(f"{IMGDIR}/xi_1d.{img_format}")
+plt.close()
+
+ax = plot_data_2d(
+    xi_2mut,
+    cmap='RdBu_r',
+)
+ax.set_title("$\\xi_{i,j}$")
+plt.savefig(f"{IMGDIR}/xi_2d.{img_format}")
+plt.close()
+
+ax = plot_data_2d(
+    eta,
+    cmap='RdBu_r',
+)
+ax.set_title("$\\eta_{i,j}$")
+plt.savefig(f"{IMGDIR}/eta.{img_format}")
+plt.close()
+
+ax = plot_data_2d(
+    eta,
+    cmap='RdBu_r',
+    vmax=0.3,
+)
+ax.set_title("$\\eta_{i,j}$")
+plt.savefig(f"{IMGDIR}/eta_vmax_03.{img_format}")
+plt.close()

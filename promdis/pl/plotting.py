@@ -18,6 +18,8 @@ def plot_data(
     """Convenience plotting function for binned, colored bar plots."""
     fig, ax = plt.subplots(1, 1, figsize=kwargs.get('figsize', None))
     
+    color = kwargs.get('color', None)
+
     # Bin data
     num_bins = len(values) // bin_size
     binned_vals = [
@@ -27,7 +29,10 @@ def plot_data(
     # Generate x values for binned data
     x = np.arange(num_bins) * bin_size * segment_size
 
-    colors = ['red' if value > 0 else 'blue' for value in binned_vals]
+    if color is None:
+        colors = ['red' if value > 0 else 'blue' for value in binned_vals]
+    else:
+        colors = [color] * len(binned_vals)
     bin_width = bin_size * segment_size
     ax.bar(x, binned_vals, width=bin_width, color=colors, align='edge')
 
