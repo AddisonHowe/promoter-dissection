@@ -16,6 +16,11 @@ def plot_data(
         **kwargs,
 ):
     """Convenience plotting function for binned, colored bar plots."""
+
+    if np.ndim(values) != 1:
+        msg = f"Got {np.ndim(values)}-dimensional input values. Should be 1D."
+        raise RuntimeError(msg)
+    
     fig, ax = plt.subplots(1, 1, figsize=kwargs.get('figsize', None))
     
     color = kwargs.get('color', None)
@@ -58,6 +63,9 @@ def plot_data_2d(
 ):
     """Convenience plotting function for 2D segmented expression data."""
     fig, ax = plt.subplots(1, 1, figsize=kwargs.get('figsize', None))
+    if np.ndim(values) != 2:
+        msg = f"Got {np.ndim(values)}-dimensional input values. Should be 2D."
+        raise RuntimeError(msg)
     
     cmap = kwargs.get('cmap', plt.cm.bwr.copy())
     if isinstance(cmap, str):

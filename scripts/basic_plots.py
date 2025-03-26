@@ -89,7 +89,7 @@ ax = plot_data(
     color='green'
 )
 ax.set_title(f"$\\mu_i^*$ (singlets)")
-plt.savefig(f"{IMGDIR}/mu_singlet_wildtype.{img_format}")
+plt.savefig(f"{IMGDIR}/mu_singlet_0.{img_format}")
 plt.close()
 
 ax = plot_data(
@@ -97,7 +97,7 @@ ax = plot_data(
     color='green'
 )
 ax.set_title(f"$\\mu_i[1]$ (singlets)")
-plt.savefig(f"{IMGDIR}/mu_singlet_mutant.{img_format}")
+plt.savefig(f"{IMGDIR}/mu_singlet_1.{img_format}")
 plt.close()
 
 #~~~  Doublets  ~~~#
@@ -109,7 +109,7 @@ ax = plot_data(
     color='green'
 )
 ax.set_title(f"$\\mu_i^*$ (doublets)")
-plt.savefig(f"{IMGDIR}/mu_doublet_wildtype.{img_format}")
+plt.savefig(f"{IMGDIR}/mu_doublet_00.{img_format}")
 plt.close()
 
 ax = plot_data(
@@ -117,7 +117,7 @@ ax = plot_data(
     color='green'
 )
 ax.set_title(f"$\\mu_i[01]$ (doublets)")
-plt.savefig(f"{IMGDIR}/mu_doublet_mutant_01.{img_format}")
+plt.savefig(f"{IMGDIR}/mu_doublet_01.{img_format}")
 plt.close()
 
 ax = plot_data(
@@ -125,7 +125,7 @@ ax = plot_data(
     color='green'
 )
 ax.set_title(f"$\\mu_i[10]$ (doublets)")
-plt.savefig(f"{IMGDIR}/mu_doublet_mutant_10.{img_format}")
+plt.savefig(f"{IMGDIR}/mu_doublet_10.{img_format}")
 plt.close()
 
 ax = plot_data(
@@ -133,7 +133,7 @@ ax = plot_data(
     color='green'
 )
 ax.set_title(f"$\\mu_i[11]$ (doublets)")
-plt.savefig(f"{IMGDIR}/mu_doublet_mutant_11.{img_format}")
+plt.savefig(f"{IMGDIR}/mu_doublet_11.{img_format}")
 plt.close()
 
 
@@ -150,7 +150,7 @@ ax = plot_data_2d(
     pairwise_mus_single[0][0], cmap='viridis', norm=None,
 )
 ax.set_title(f"$\\mu_{{i,j}}^{{**}}$ (singlets)")
-plt.savefig(f"{IMGDIR}/pairwise_mu_singlet_wildtype.{img_format}")
+plt.savefig(f"{IMGDIR}/pairwise_mu_singlet_00.{img_format}")
 plt.close()
 
 profiles = [(0,1), (1,0), (1,1)]
@@ -159,7 +159,7 @@ for i, j in profiles:
         pairwise_mus_single[i][j], cmap='viridis', norm=None,
     )
     ax.set_title(f"$\\mu_{{i,j}}[{i},{j}]$")
-    plt.savefig(f"{IMGDIR}/pairwise_mu_singlet_mutant_{i}_{j}.{img_format}")
+    plt.savefig(f"{IMGDIR}/pairwise_mu_singlet_{i}{j}.{img_format}")
     plt.close()
 
 #~~~  Doublets  ~~~#
@@ -168,10 +168,10 @@ pairwise_mus_double = compute_mean_expression_by_pairwise_mutation(
 )
 
 ax = plot_data_2d(
-    pairwise_mus_double[0], cmap='viridis',  norm=None,
+    pairwise_mus_double[0][0], cmap='viridis', norm=None,
 )
 ax.set_title(f"$\\mu_{{i,j}}^{{**}}$ (doublets)")
-plt.savefig(f"{IMGDIR}/pairwise_mu_doublet_wildtype.{img_format}")
+plt.savefig(f"{IMGDIR}/pairwise_mu_doublet_00.{img_format}")
 plt.close()
 
 profiles = [
@@ -186,7 +186,7 @@ for i, j in profiles:
     b1 = "".join(map(str, int_to_binary_arr(i, n=2)))
     b2 = "".join(map(str, int_to_binary_arr(j, n=2)))
     ax.set_title(f"$\\mu_{{i,j}}[{b1},{b2}]$")
-    plt.savefig(f"{IMGDIR}/pairwise_mu_doublet_mutant_{b1}_{b2}.{img_format}")
+    plt.savefig(f"{IMGDIR}/pairwise_mu_doublet_{b1}{b2}.{img_format}")
     plt.close()
 
 
@@ -194,54 +194,116 @@ for i, j in profiles:
 ##  Compute expression shifts and epistasis effect (singlets)  ##
 #################################################################
 
-# All instances with one mutation at a single position. 
-xi_1mut, _ = compute_expression_shift_by_mutation(
+# All instances with one mutation at a given position. 
+xi_singlet_1, _ = compute_expression_shift_by_mutation(
     seqs, expression, wt_seq, 
     segment_size=1,
     profile_groups=[(1,)]
 )
 
 # All instances with one mutation on both segments.
-xi_2mut, _ = compute_expression_shift_by_pairwise_mutation(
+pairwise_xi_singlet_11, _ = compute_expression_shift_by_pairwise_mutation(
     seqs, expression, wt_seq,
     segment_size=1,
     profile_groups=[((1,),(1,))],
 )
 
 # Difference between two-segment mutations and *two* one-segment mutations
-eta = xi_2mut - xi_1mut[None,:] - xi_1mut[:,None]
-print("eta contains nan?: ", np.any(np.isnan(eta)))
+eta_singlet = pairwise_xi_singlet_11 - xi_singlet_1[None,:] - xi_singlet_1[:,None]
+print("eta contains nan?: ", np.any(np.isnan(eta_singlet)))
 
 # Plotting 
 ax = plot_data(
-    xi_1mut, segment_size=1, bin_size=1,
+    xi_singlet_1, segment_size=1, bin_size=1,
     cmap='RdBu_r',
 )
 ax.set_title("$\\xi_{i}$")
-plt.savefig(f"{IMGDIR}/xi_1d.{img_format}")
+plt.savefig(f"{IMGDIR}/xi_singlet_1.{img_format}")
 plt.close()
 
 ax = plot_data_2d(
-    xi_2mut,
+    pairwise_xi_singlet_11,
     cmap='RdBu_r',
 )
 ax.set_title("$\\xi_{i,j}$")
-plt.savefig(f"{IMGDIR}/xi_2d.{img_format}")
+plt.savefig(f"{IMGDIR}/pairwise_xi_singlet_11.{img_format}")
 plt.close()
 
 ax = plot_data_2d(
-    eta,
+    eta_singlet,
     cmap='RdBu_r',
 )
 ax.set_title("$\\eta_{i,j}$")
-plt.savefig(f"{IMGDIR}/eta.{img_format}")
+plt.savefig(f"{IMGDIR}/eta_singlet.{img_format}")
+plt.close()
+
+
+#################################################################
+##  Compute expression shifts and epistasis effect (doublets)  ##
+#################################################################
+
+# All instances with exactly one mutation to a segment. 
+xi_doublet_01_10, _ = compute_expression_shift_by_mutation(
+    seqs, expression, wt_seq, 
+    segment_size=2,
+    profile_groups=[(0,1),(1,0)]
+)
+
+# All instances with exactly one mutation on both segments.
+pairwise_xi_doublet_0001_0010, _ = compute_expression_shift_by_pairwise_mutation(
+    seqs, expression, wt_seq,
+    segment_size=2,
+    profile_groups=[((0,0),(0,1)), ((0,0),(1,0))],
+)
+
+# All instances with exactly one mutation on both segments.
+pairwise_xi_doublet_0101_0110_1001_1010, _ = compute_expression_shift_by_pairwise_mutation(
+    seqs, expression, wt_seq,
+    segment_size=2,
+    profile_groups=[((0,1),(0,1)), ((0,1),(1,0)), ((1,0),(0,1)), ((1,0),(1,0))],
+)
+
+# Difference between two-segment mutations and *two* one-segment mutations
+eta_doublet_v1 = pairwise_xi_doublet_0101_0110_1001_1010 \
+    - xi_doublet_01_10[None,:] \
+    - xi_doublet_01_10[:,None]
+
+eta_doublet_v2 = pairwise_xi_doublet_0101_0110_1001_1010 \
+    - pairwise_xi_doublet_0001_0010 \
+    - pairwise_xi_doublet_0001_0010.T
+
+print("Largest discrepancy between eta_doublet_v1 and eta_doublet_v2:", 
+      np.nanmax(np.abs(eta_doublet_v1 - eta_doublet_v2)))
+
+# Plotting 
+ax = plot_data(
+    xi_doublet_01_10, segment_size=1, bin_size=1,
+    cmap='RdBu_r',
+)
+ax.set_title("$\\xi_{i}[01|10]$")
+plt.savefig(f"{IMGDIR}/xi_doublet_01_10.{img_format}")
 plt.close()
 
 ax = plot_data_2d(
-    eta,
+    pairwise_xi_doublet_0101_0110_1001_1010,
     cmap='RdBu_r',
-    vmax=0.3,
+)
+ax.set_title("$\\xi_{i,j}[(01,01)|(01,10)|(10,01)|(10,10)]$")
+plt.savefig(f"{IMGDIR}/pairwise_xi_doublet_0101_0110_1001_1010.{img_format}")
+plt.close()
+
+ax = plot_data_2d(
+    eta_doublet_v1,
+    cmap='RdBu_r',
 )
 ax.set_title("$\\eta_{i,j}$")
-plt.savefig(f"{IMGDIR}/eta_vmax_03.{img_format}")
+plt.savefig(f"{IMGDIR}/eta_v1_doublet.{img_format}")
+plt.close()
+
+ax = plot_data_2d(
+    eta_doublet_v2,
+    cmap='RdBu_r',
+)
+ax.set_title("$\\eta_{i,j}$")
+plt.savefig(f"{IMGDIR}/eta_v2_doublet.{img_format}")
 plt.close()
