@@ -1,0 +1,1025 @@
+﻿idx,gene,growth,start,end,type,RNAP
+0,ynaI,heat shock,-14,-7,activator,-10
+0,ynaI,Iron supplement,-36,-32,activator,-35
+1,ynaI,Iron supplement,-16,1,activator,-10
+0,ynaI,LB,-48,-6,activator,RNAP
+0,ynaI,Anaerobic growth,-48,-7,activator,RNAP
+0,ynaI,Trehalose growth,-44,-6,activator,RNAP
+0,ynaI,Zinc growth,-34,-7,activator,RNAP
+0,ynaI,Xylose Arabinose growth,-36,-7,activator,RNAP
+0,ynaI,Xanthosine growth,-39,1,activator,RNAP
+0,yehT,heat shock,-18,-7,activator,-10
+0,yehT,Iron supplement,-18,-7,activator,-10
+1,yehT,Iron supplement,5,15,activator,-10
+0,yehT,LB,-18,-7,activator,-10
+0,yehT,Trehalose growth,-46,-33,activator,-35
+0,yehT,Zinc growth,-18,1,activator,-10
+0,yehT,Xylose Arabinose growth,-18,2,activator,-10
+0,ycgB,heat shock,-27,-6,activator,-10
+0,ycgB,M9,-17,2,activator,-10
+0,ycgB,Zinc growth,-20,-7,activator,-10
+0,ycgB,Xylose Arabinose growth,-13,-7,activator,-10
+0,xylF,Trehalose growth,-32,-20,activator,-10
+0,xylF,Zinc growth,-37,-11,activator,RNAP
+0,xylF,Xylose Arabinose growth,-78,-55,activator,TF
+0,xylF,Xylose Arabinose growth,-50,-27,activator,TF
+0,aegA,M9,-75,-64,activator,-10
+1,aegA,M9,-6,2,activator,-10
+0,aegA,Anaerobic growth,-34,-21,activator,-35
+0,aegA,Xylose Arabinose growth,-13,6,activator,-10
+0,sdiA,heat shock,-63,-48,activator,-10
+0,sdiA,Iron supplement,-83,-71,activator,-35
+1,sdiA,Iron supplement,-66,-56,repressor,TF
+0,sdiA,LB,-79,-48,activator,RNAP
+1,sdiA,LB,-67,-30,repressor,TRUE
+0,sdiA,Anaerobic growth,-85,-37,activator,RNAP
+1,sdiA,Anaerobic growth,-60,-41,repressor,TF
+0,sdiA,Zinc growth,-79,-72,activator,-35
+1,sdiA,Zinc growth,-63,-48,activator,-10
+2,sdiA,Zinc growth,-59,-41,repressor,TF
+0,sdiA,Xylose Arabinose growth,-79,-72,activator,-35
+1,sdiA,Xylose Arabinose growth,-63,-48,activator,-10
+2,sdiA,Xylose Arabinose growth,-60,-41,repressor,-10
+0,sdiA,Xanthosine growth,-83,-72,activator,-35
+1,sdiA,Xanthosine growth,-62,-48,activator,-10
+3,sdiA,Xanthosine growth,-59,-56,repressor,TF
+0,groSL,heat shock,-52,-1,activator,RNAP
+0,groSL,Iron supplement,-20,-6,activator,-10
+1,groSL,Iron supplement,9,22,activator,-10
+0,groSL,M9,23,29,activator,-10
+0,groSL,Anaerobic growth,-46,-33,activator,RNAP
+1,groSL,Anaerobic growth,-17,-6,activator,RNAP
+2,groSL,Anaerobic growth,10,25,activator,-10
+0,groSL,phoP,-41,-34,activator,-35
+1,groSL,phoP,-17,-1,activator,-10
+2,groSL,phoP,8,18,activator,TF
+0,groSL,Xylose Arabinose growth,10,22,activator,-10
+0,groSL,Xanthosine growth,-39,-14,activator,-35
+1,groSL,Xanthosine growth,5,15,activator,TF
+1,groSL,Xanthosine growth,15,22,activator,-10
+0,idnK,heat shock,-41,-27,activator,-35
+0,idnK,Iron supplement,-13,1,activator,-10
+1,idnK,Iron supplement,-48,-27,repressor,TF
+0,idnK,LB,-43,-30,activator,-35
+1,idnK,LB,-14,1,activator,-10
+2,idnK,LB,-48,-27,repressor,TF
+0,idnK,Anaerobic growth,-45,-36,activator,-35
+1,idnK,Anaerobic growth,-24,5,activator,-10
+2,idnK,Anaerobic growth,-48,-32,repressor,TF
+1,idnK,0cAMP,-38,-33,repressor,TF
+0,idnK,Trehalose growth,-44,-36,activator,-35
+1,idnK,Trehalose growth,-17,-8,activator,-10
+2,idnK,Trehalose growth,-48,-32,repressor,TF
+0,idnK,Zinc growth,-13,1,activator,-10
+1,idnK,Zinc growth,-48,-32,repressor,TF
+0,idnK,Xylose Arabinose growth,-44,-36,activator,-35
+1,idnK,Xylose Arabinose growth,-13,1,activator,-10
+2,idnK,Xylose Arabinose growth,-48,-27,repressor,TF
+0,idnK,Xanthosine growth,-43,-30,activator,-35
+1,idnK,Xanthosine growth,-16,-8,activator,-10
+2,idnK,Xanthosine growth,-48,-32,repressor,TF
+0,yedJ,heat shock,-58,-6,RNAP,
+0,yedJ,Iron supplement,-54,-18,activator,RNAP
+1,yedJ,LB,-34,-20,activator,-10
+0,yedJ,Anaerobic growth,-63,-20,activator,RNAP
+1,yedJ,Anaerobic growth,-40,-12,repressor,TF
+0,yedJ,Trehalose growth,-54,-45,activator,-35
+1,yedJ,Trehalose growth,-34,-20,activator,-10
+2,yedJ,Trehalose growth,-31,-12,repressor,-10
+0,yedJ,Zinc growth,-63,-17,activator,RNAP
+1,yedJ,Zinc growth,-40,-12,repressor,-10
+0,yedJ,Xylose Arabinose growth,-54,-17,activator,RNAP
+1,yedJ,Xylose Arabinose growth,-40,-23,repressor,-10
+0,yedJ,Xanthosine growth,-63,-43,activator,-35
+1,yedJ,Xanthosine growth,-34,-20,activator,-10
+2,yedJ,Xanthosine growth,-40,-23,repressor,TF
+0,yicI,heat shock,-112,-100,activator,TF
+1,yicI,heat shock,-39,-16,activator,TF
+2,yicI,heat shock,-5,18,activator,-10
+0,yicI,Iron supplement,-111,-95,activator,TF
+1,yicI,Iron supplement,-65,-57,activator,TF
+2,yicI,Iron supplement,-40,-20,activator,TF
+2,yicI,Iron supplement,-20,-10,activator,-10
+3,yicI,Iron supplement,-5,15,activator,-10
+0,yicI,LB,-112,-96,activator,TF
+1,yicI,LB,-39,-28,activator,TF
+0,yicI,Anaerobic growth,-30,-16,activator,TF
+0,yicI,Anaerobic growth,-20,-16,activator,-35
+1,yicI,Anaerobic growth,3,7,activator,-10
+0,yicI,Trehalose growth,-65,-62,activator,TF
+1,yicI,Trehalose growth,-40,-20,activator,TF
+1,yicI,Trehalose growth,-20,-16,activator,-35
+2,yicI,Trehalose growth,-5,18,activator,-10
+0,yicI,Zinc growth,-43,-20,activator,TF
+0,yicI,Zinc growth,-20,-16,activator,-35
+1,yicI,Zinc growth,-5,7,activator,-10
+0,yicI,Xylose Arabinose growth,-30,-20,activator,TF
+0,yicI,Xylose Arabinose growth,-20,-16,activator,-35
+0,yicI,Xanthosine growth,-30,-20,activator,TF
+0,yicI,Xanthosine growth,-20,-16,activator,-35
+1,yicI,Xanthosine growth,3,7,activator,-10
+0,htrB,LB,-47,-35,activator,-35
+1,htrB,LB,-17,-6,activator,-10
+0,fdoH,heat shock,-114,-102,activator,-10
+0,fdoH,Iron supplement,-114,-102,activator,-10
+0,fdoH,LB,-114,-102,activator,-10
+0,fdoH,Anaerobic growth,-114,-101,activator,-10
+0,fdoH,Trehalose growth,-114,-106,activator,-10
+0,fdoH,Zinc growth,-114,-102,activator,-10
+0,fdoH,Xylose Arabinose growth,-114,-102,activator,-10
+0,fdoH,Xanthosine growth,-114,-102,activator,-10
+0,iap,heat shock,-12,-6,activator,-10
+0,iap,Iron supplement,-12,3,activator,-10
+0,iap,Iron supplement,3,29,activator,TF
+0,iap,LB,-12,10,activator,-10
+1,iap,LB,-28,-13,repressor,TF
+2,iap,LB,22,29,repressor,TF
+0,iap,Anaerobic growth,-17,10,activator,-10
+1,iap,Anaerobic growth,23,29,activator,TF
+0,iap,Zinc growth,-12,10,activator,-10
+0,iap,Xylose Arabinose growth,-12,3,activator,-10
+0,iap,Xylose Arabinose growth,3,29,activator,TF
+0,iap,Xanthosine growth,-17,6,activator,-10
+0,ybeZ,heat shock,-38,-11,activator,-35
+0,ybeZ,Iron supplement,-7,29,activator,-10
+1,ybeZ,Iron supplement,15,29,repressor,TF
+0,ybeZ,LB,4,17,activator,-35
+1,ybeZ,LB,21,29,activator,-10
+2,ybeZ,LB,19,29,repressor,TF
+0,ybeZ,Anaerobic growth,3,29,activator,-10
+1,ybeZ,Anaerobic growth,15,29,repressor,TF
+0,ybeZ,Trehalose growth,3,29,activator,-10
+1,ybeZ,Trehalose growth,15,29,repressor,TF
+0,ybeZ,Zinc growth,4,9,activator,-35
+1,ybeZ,Zinc growth,25,29,activator,-10
+2,ybeZ,Zinc growth,27,29,repressor,TF
+0,ybeZ,Xylose Arabinose growth,-5,8,activator,-35
+1,ybeZ,Xylose Arabinose growth,25,29,activator,-10
+0,ybeZ,Xanthosine growth,25,29,activator,-10
+1,ybeZ,Xanthosine growth,22,29,repressor,TF
+0,araAB,heat shock,-76,-65,activator,TF
+0,araAB,arabinose,-76,-56,activator,TF
+0,araAB,arabinose,-102,-82,activator,TF
+0,araAB,arabinose,-51,-32,activator,TF
+0,araAB,Xylose Arabinose growth,-98,-82,activator,TF
+0,araAB,Xylose Arabinose growth,-76,-56,activator,TF
+0,araAB,Xylose Arabinose growth,-51,-32,activator,TF
+1,araAB,Xylose Arabinose growth,-14,-8,activator,-10
+0,rlmA,heat shock,-78,-51,activator,-10
+0,rlmA,Iron supplement,-9,-4,activator,-10
+0,rlmA,LB,-35,-5,activator,-10
+0,rlmA,Anaerobic growth,-40,-5,activator,-10
+0,rlmA,Trehalose growth,-70,-51,activator,-10
+0,rlmA,Xylose Arabinose growth,-70,-51,activator,-10
+1,rlmA,Xylose Arabinose growth,-10,-5,activator,-10
+0,rlmA,Xanthosine growth,-10,-5,activator,-10
+0,hslU,heat shock,-33,5,activator,RNAP
+0,mscL,heat shock,-32,6,activator,-10
+0,mscL,Iron supplement,-16,-7,activator,-10
+0,mscL,LB,-17,-7,activator,-10
+0,mscL,M9,-23,-9,activator,-10
+0,mscL,Zinc growth,-23,-9,activator,-10
+0,mscL,Xylose Arabinose growth,-30,-9,activator,-10
+0,mscL,Xanthosine growth,-16,-7,activator,-10
+0,zapB,heat shock,-45,-32,activator,-35
+1,zapB,heat shock,-14,3,activator,-10
+0,zapB,Iron supplement,-51,3,activator,RNAP
+0,zapB,LB,-51,-8,activator,RNAP
+0,zapB,M9,-39,-32,activator,-35
+1,zapB,M9,-14,3,activator,-10
+0,zapB,Anaerobic growth,-51,3,activator,RNAP
+0,zapB,acetate,-45,3,activator,RNAP
+0,zapB,phoP,-40,-32,activator,-35
+1,zapB,phoP,-14,-4,activator,-10
+0,zapB,0cAMP,-50,1,activator,RNAP
+0,zapB,Trehalose growth,-38,-8,activator,RNAP
+0,zapB,Zinc growth,-51,-8,activator,RNAP
+0,zapB,Xylose Arabinose growth,-38,-8,activator,RNAP
+0,zapB,Xanthosine growth,-38,-8,activator,RNAP
+1,yqhC,heat shock,0,20,activator,-10
+0,yqhC,Iron supplement,2,17,activator,-10
+2,yqhC,Iron supplement,0,20,activator,-10
+0,yqhC,LB,-43,-26,activator,-35
+1,yqhC,LB,-9,5,activator,-10
+2,yqhC,LB,9,13,activator,-10
+1,yqhC,M9,0,20,activator,-10
+0,yqhC,Anaerobic growth,2,16,activator,-10
+1,yqhC,Trehalose growth,0,20,activator,-10
+1,yqhC,Zinc growth,0,20,activator,-10
+1,yqhC,Xylose Arabinose growth,0,20,activator,-10
+1,yqhC,Xanthosine growth,0,20,activator,-10
+0,ydhO,Zinc growth,7,23,activator,-10
+0,yehS,heat shock,-2,5,activator,TF
+0,yehS,heat shock,5,12,activator,-10
+0,yehS,Iron supplement,-2,5,activator,TF
+0,yehS,Iron supplement,5,12,activator,-10
+0,yehS,LB,-22,17,activator,RNAP
+0,yehS,LB,-2,5,activator,TF
+0,yehS,M9,-4,5,activator,TF
+0,yehS,M9,5,17,activator,-10
+0,yehS,Anaerobic growth,-2,5,activator,TF
+0,yehS,Anaerobic growth,-25,17,activator,RNAP
+0,yehS,Trehalose growth,-2,5,activator,TF
+0,yehS,Trehalose growth,5,12,activator,-10
+0,yehS,Zinc growth,-14,17,activator,RNAP
+0,yehS,Zinc growth,-2,5,activator,TF
+0,yehS,Xylose Arabinose growth,-2,5,activator,TF
+0,yehS,Xylose Arabinose growth,-25,17,activator,RNAP
+0,yehS,Xanthosine growth,-2,5,activator,TF
+0,yehS,Xanthosine growth,-25,12,activator,RNAP
+0,dgoR,LB,-57,-50,activator,TF
+1,dgoR,LB,-44,-35,repressor,TF
+0,asnA,heat shock,-13,3,activator,-10
+0,asnA,Iron supplement,-22,1,activator,-10
+0,asnA,LB,-22,-5,activator,-10
+0,asnA,Anaerobic growth,-13,3,activator,-10
+0,asnA,Zinc growth,-22,-5,activator,-10
+0,asnA,Xylose Arabinose growth,-22,3,activator,-10
+0,asnA,Xanthosine growth,-22,-5,activator,-10
+0,rcsF,Iron supplement,-71,-58,activator,TF
+1,rcsF,Iron supplement,-36,-28,activator,-35
+2,rcsF,Iron supplement,-15,4,activator,-10
+0,rcsF,LB,-36,-26,activator,-35
+1,rcsF,LB,-15,9,activator,-10
+2,rcsF,LB,-24,-11,repressor,-10
+0,rcsF,Anaerobic growth,-36,-29,activator,-35
+1,rcsF,Anaerobic growth,-14,-3,activator,-10
+0,rcsF,Trehalose growth,-63,-58,activator,TF
+0,rcsF,Zinc growth,-70,-58,activator,TF
+1,rcsF,Zinc growth,-46,-28,activator,-35
+2,rcsF,Zinc growth,-14,-2,activator,-10
+0,rcsF,Xylose Arabinose growth,-63,-53,activator,TF
+1,rcsF,Xylose Arabinose growth,-36,-30,activator,-35
+2,rcsF,Xylose Arabinose growth,-15,7,activator,-10
+0,rcsF,Xanthosine growth,-71,-53,activator,TF
+1,rcsF,Xanthosine growth,-14,-2,activator,-10
+0,ybiP,heat shock,-8,1,activator,-10
+0,ybiP,Iron supplement,-8,1,activator,-10
+0,lac,LB,-114,-90,activator,TF
+1,lac,LB,-77,-71,activator,-35
+2,lac,LB,-52,-47,activator,-10
+0,ompR,M9,-3,23,activator,-10
+0,ompR,acetate,-37,-35,activator,-10
+2,ompR,acetate,-113,-94,repressor,TF
+3,ompR,acetate,-56,-25,repressor,TF
+4,ompR,acetate,-1,13,repressor,TF
+0,ompR,Xanthosine growth,-1,15,activator,-10
+0,bdcR,heat shock,-47,-3,activator,RNAP
+1,bdcR,heat shock,-25,1,repressor,TF
+0,bdcR,Iron supplement,-47,-1,activator,RNAP
+1,bdcR,Iron supplement,-27,-5,repressor,TF
+0,bdcR,LB,-35,-7,activator,RNAP
+1,bdcR,LB,-27,1,repressor,TF
+0,bdcR,M9,-42,-28,activator,-35
+1,bdcR,M9,-16,-7,activator,-10
+0,bdcR,Anaerobic growth,-47,-7,activator,RNAP
+1,bdcR,Anaerobic growth,-27,1,repressor,TF
+0,bdcR,deoR,-42,0,activator,RNAP
+1,bdcR,deoR,-22,-6,repressor,TF
+0,bdcR,Trehalose growth,-47,-7,activator,RNAP
+1,bdcR,Trehalose growth,-27,-4,repressor,TF
+0,bdcR,Zinc growth,-47,-7,activator,RNAP
+1,bdcR,Zinc growth,-27,-5,repressor,TF
+0,bdcR,Xylose Arabinose growth,-47,-7,activator,RNAP
+1,bdcR,Xylose Arabinose growth,-27,1,repressor,TF
+0,bdcR,Xanthosine growth,-47,3,activator,RNAP
+1,bdcR,Xanthosine growth,-25,1,repressor,TF
+0,yehU,heat shock,-55,-27,activator,-35
+0,yehU,LB,-18,-3,activator,-10
+0,yehU,Anaerobic growth,-62,-25,activator,TF
+0,yehU,Anaerobic growth,-25,7,activator,-10
+1,yehU,Zinc growth,-9,-3,activator,-10
+0,yehU,Xylose Arabinose growth,-83,-69,activator,-10
+1,yehU,Xylose Arabinose growth,-56,-42,activator,-35
+2,yehU,Xylose Arabinose growth,-20,-3,activator,-10
+0,yehU,Xanthosine growth,-78,-63,activator,-10
+1,yehU,Xanthosine growth,-56,-38,activator,-35
+2,yehU,Xanthosine growth,-19,-3,activator,-10
+0,WaaA-coaD,LB,-50,-39,activator,TF
+0,WaaA-coaD,LB,-39,-32,activator,-35
+1,WaaA-coaD,LB,-14,2,activator,-10
+0,WaaA-coaD,M9,-13,1,activator,-10
+0,WaaA-coaD,Anaerobic growth,-44,-39,activator,TF
+0,WaaA-coaD,Anaerobic growth,-39,-32,activator,-35
+1,WaaA-coaD,Anaerobic growth,-14,5,activator,-10
+0,WaaA-coaD,Zinc growth,-50,-39,activator,TF
+0,WaaA-coaD,Zinc growth,-39,-32,activator,-35
+1,WaaA-coaD,Zinc growth,-13,-1,activator,-10
+0,WaaA-coaD,Xylose Arabinose growth,-53,-39,activator,TF
+0,WaaA-coaD,Xylose Arabinose growth,-39,-1,activator,RNAP
+0,WaaA-coaD,Xanthosine growth,-53,-39,activator,TF
+0,WaaA-coaD,Xanthosine growth,-39,-9,activator,RNAP
+0,ygdH,heat shock,-44,-8,activator,RNAP
+0,ygdH,Iron supplement,-37,-8,activator,RNAP
+0,ygdH,LB,-37,-7,activator,RNAP
+0,ygdH,Anaerobic growth,-37,-7,activator,RNAP
+0,ygdH,Trehalose growth,-37,-7,activator,RNAP
+0,ygdH,Zinc growth,-37,-7,activator,RNAP
+0,ygdH,Xylose Arabinose growth,-37,-7,activator,RNAP
+0,ygdH,Xanthosine growth,-37,-7,activator,RNAP
+0,znuA,heat shock,8,19,repressor,TF
+0,znuA,Iron supplement,4,29,activator,RNAP
+1,znuA,Iron supplement,20,29,repressor,TF
+0,znuA,Anaerobic growth,5,29,activator,-10
+0,znuA,Trehalose growth,13,28,activator,-10
+0,znuA,Zinc growth,8,19,activator,-10
+0,znuA,Xylose Arabinose growth,8,29,activator,-10
+1,znuA,Xylose Arabinose growth,18,29,repressor,TF
+0,znuA,Xanthosine growth,8,29,activator,-10
+1,znuA,Xanthosine growth,18,29,repressor,TF
+0,uvrD,LB,-15,-8,activator,-10
+0,uvrD,acetate,22,29,activator,-10
+0,uvrD,acetate,6,14,repressor,TF
+0,uvrD,0cAMP,-43,-29,activator,-35
+1,uvrD,0cAMP,-13,-8,activator,-10
+0,uvrD,Xanthosine growth,-15,-8,activator,-10
+0,modE,LB,-25,-11,activator,-10
+0,modE,Anaerobic growth,-37,-19,activator,-35
+0,modE,Xylose Arabinose growth,-35,-19,activator,-35
+0,ygjP,heat shock,-28,-12,activator,-10
+0,ygjP,Iron supplement,-33,-19,activator,-35
+0,ygjP,LB,-61,-12,activator,RNAP
+0,ygjP,M9,-27,-12,activator,-10
+0,ygjP,Anaerobic growth,-61,-46,activator,TF
+1,ygjP,Anaerobic growth,-28,-19,activator,-35
+0,ygjP,Zinc growth,-28,-19,activator,-35
+0,ygjP,Xylose Arabinose growth,-61,-46,activator,TF
+1,ygjP,Xylose Arabinose growth,-28,-19,activator,-35
+0,ygjP,Xanthosine growth,-50,-19,activator,-35
+0,yggW,heat shock,-36,-30,activator,-35
+1,yggW,heat shock,-16,1,activator,-10
+0,tig,heat shock,-36,-7,activator,RNAP
+2,tig,heat shock,-15,1,repressor,TF
+0,tig,Iron supplement,-36,-30,activator,-35
+1,tig,Iron supplement,-14,-6,activator,-10
+0,tig,LB,-36,-6,activator,RNAP
+0,tig,Anaerobic growth,-36,-6,activator,RNAP
+0,tig,phoP,-36,-6,activator,RNAP
+0,tig,Trehalose growth,-36,-31,activator,-35
+1,tig,Trehalose growth,-14,-7,activator,-10
+0,tig,Zinc growth,-36,-6,activator,RNAP
+0,tig,Xylose Arabinose growth,-36,-6,activator,RNAP
+0,tig,Xanthosine growth,-36,-6,activator,RNAP
+0,dicC,heat shock,-35,-30,activator,-35
+1,dicC,heat shock,-12,-6,activator,-10
+2,dicC,heat shock,-6,10,repressor,TF
+0,dicC,Iron supplement,-45,-30,activator,-35
+1,dicC,Iron supplement,-12,-6,activator,-10
+2,dicC,Iron supplement,-13,10,repressor,TF
+0,dicC,LB,-41,-30,activator,-35
+1,dicC,LB,-12,-6,activator,-10
+0,dicC,Anaerobic growth,-36,-30,activator,-35
+1,dicC,Anaerobic growth,-12,-6,activator,-10
+0,dicC,acetate,-48,-28,activator,-35
+1,dicC,acetate,-12,-6,activator,-10
+2,dicC,acetate,-13,10,repressor,TF
+0,dicC,Trehalose growth,-35,-30,activator,-35
+1,dicC,Trehalose growth,-12,-6,activator,-10
+2,dicC,Trehalose growth,-6,10,repressor,TF
+0,dicC,Zinc growth,-45,-30,activator,-35
+1,dicC,Zinc growth,-12,-6,activator,-10
+2,dicC,Zinc growth,-6,8,repressor,TF
+0,dicC,Xylose Arabinose growth,-45,-30,activator,-35
+1,dicC,Xylose Arabinose growth,-12,-6,activator,-10
+2,dicC,Xylose Arabinose growth,-13,10,repressor,TF
+0,dicC,Xanthosine growth,-43,-28,activator,-35
+1,dicC,Xanthosine growth,-12,-6,activator,-10
+2,dicC,Xanthosine growth,-5,10,repressor,TF
+0,ydjA,heat shock,-37,-9,activator,RNAP
+1,ydjA,heat shock,-21,1,repressor,TF
+0,ydjA,Iron supplement,-39,-36,activator,-35
+1,ydjA,Iron supplement,-20,-9,activator,-10
+2,ydjA,Iron supplement,-11,5,repressor,TF
+0,ydjA,LB,-49,-9,activator,RNAP
+1,ydjA,LB,-21,-3,repressor,TF
+0,ydjA,Anaerobic growth,-24,-9,activator,-10
+1,ydjA,Anaerobic growth,-11,1,repressor,TF
+0,ydjA,Trehalose growth,-24,-9,activator,-10
+1,ydjA,Trehalose growth,-10,1,repressor,TF
+0,ydjA,Zinc growth,-29,-9,activator,RNAP
+1,ydjA,Zinc growth,-10,-3,repressor,TF
+0,ydjA,Xylose Arabinose growth,-37,-34,activator,-35
+1,ydjA,Xylose Arabinose growth,-20,-9,activator,-10
+2,ydjA,Xylose Arabinose growth,-21,1,repressor,TF
+0,ydjA,Xanthosine growth,-37,-9,activator,RNAP
+1,ydjA,Xanthosine growth,-21,1,repressor,TF
+0,ybjT,heat shock,-36,-25,activator,-35
+0,ybjT,Iron supplement,-36,-30,activator,-35
+1,ybjT,Iron supplement,-18,-9,activator,-10
+0,ybjT,LB,-36,-30,activator,-35
+1,ybjT,LB,-18,-9,activator,-10
+0,ybjT,Anaerobic growth,-43,-9,activator,RNAP
+0,ybjT,Zinc growth,-36,-28,activator,-35
+1,ybjT,Zinc growth,-18,-9,activator,-10
+0,ybjT,Xylose Arabinose growth,-36,-9,activator,RNAP
+0,ybjT,Xanthosine growth,-36,-30,activator,-35
+1,ybjT,Xanthosine growth,-18,-9,activator,-10
+0,zupT,heat shock,-23,-13,activator,-10
+0,zupT,Iron supplement,-23,-13,activator,-10
+0,zupT,LB,-23,-3,activator,-10
+0,zupT,Anaerobic growth,-23,-2,activator,-10
+0,zupT,acetate,-23,-14,activator,-10
+0,zupT,0cAMP,-23,-3,activator,-10
+0,zupT,Zinc growth,-23,-13,activator,-10
+0,zupT,Xylose Arabinose growth,-23,-14,activator,-10
+0,zupT,Xanthosine growth,-23,-13,activator,-10
+0,yedK,heat shock,4,20,activator,-10
+1,yedK,heat shock,-11,25,repressor,TF
+0,yedK,Iron supplement,-3,27,activator,-10
+1,yedK,Iron supplement,-11,1,repressor,TF
+2,yedK,Iron supplement,12,17,repressor,TF
+0,yedK,LB,7,27,activator,-10
+0,yedK,M9,-11,-4,activator,-35
+1,yedK,M9,11,25,activator,-10
+2,yedK,M9,4,21,repressor,TF
+0,yedK,Anaerobic growth,-22,-10,activator,-35
+1,yedK,Anaerobic growth,7,27,activator,-10
+0,yedK,deoR,10,23,activator,-10
+1,yedK,deoR,12,25,repressor,TF
+0,yedK,Trehalose growth,-14,25,activator,-10
+1,yedK,Trehalose growth,-3,27,repressor,TF
+0,yedK,Zinc growth,-14,24,activator,-10
+1,yedK,Zinc growth,-3,27,repressor,TF
+0,yedK,Xylose Arabinose growth,4,27,activator,-10
+1,yedK,Xylose Arabinose growth,-14,17,repressor,TF
+0,thrLABC,heat shock,-57,-41,activator,TF
+0,thrLABC,heat shock,-41,-3,activator,RNAP
+0,thrLABC,Iron supplement,-46,-7,activator,RNAP
+0,thrLABC,LB,-46,-5,activator,RNAP
+0,thrLABC,Anaerobic growth,-57,-41,activator,TF
+0,thrLABC,Anaerobic growth,-41,0,activator,RNAP
+0,thrLABC,Trehalose growth,-57,-41,activator,TF
+0,thrLABC,Trehalose growth,-41,0,activator,RNAP
+0,thrLABC,Zinc growth,-52,-41,activator,TF
+0,thrLABC,Zinc growth,-41,-8,activator,RNAP
+0,thrLABC,Xylose Arabinose growth,-52,-41,activator,TF
+0,thrLABC,Xylose Arabinose growth,-41,-7,activator,RNAP
+0,thrLABC,Xanthosine growth,-52,-41,activator,TF
+0,thrLABC,Xanthosine growth,-41,0,activator,RNAP
+0,cra,heat shock,-12,-4,activator,-10
+0,cra,Iron supplement,-15,-8,activator,-10
+0,cra,LB,-18,-5,activator,-10
+0,cra,Anaerobic growth,-18,-8,activator,-10
+0,cra,acetate,-19,-9,activator,-10
+0,cra,0cAMP,-12,1,activator,-10
+0,cra,Trehalose growth,-21,-8,activator,-10
+0,cra,Zinc growth,-18,-8,activator,-10
+0,cra,Xylose Arabinose growth,-18,-8,activator,-10
+0,cra,Xanthosine growth,-18,-8,activator,-10
+0,sbcB,heat shock,-13,-5,activator,-10
+0,sbcB,LB,-23,1,activator,-10
+0,sbcB,Trehalose growth,-13,-5,activator,-10
+0,sbcB,Xylose Arabinose growth,-12,1,activator,-10
+0,sbcB,Xanthosine growth,-13,-1,activator,-10
+0,mscM,heat shock,24,29,activator,-10
+0,mscM,Iron supplement,-36,-26,activator,-35
+2,mscM,Iron supplement,20,29,repressor,TF
+0,mscM,Trehalose growth,20,29,repressor,TF
+0,mscM,Zinc growth,20,29,repressor,TF
+0,mscM,Xylose Arabinose growth,20,29,repressor,TF
+0,pcm,LB,-45,-23,activator,-35
+1,pcm,LB,-17,-7,activator,-10
+2,pcm,LB,-15,-10,repressor,TF
+1,pcm,Anaerobic growth,-46,-27,activator,-35
+2,pcm,Anaerobic growth,-16,-2,activator,-10
+3,pcm,Anaerobic growth,16,28,activator,-10
+4,pcm,Anaerobic growth,-60,-34,repressor,TF
+0,pcm,Xylose Arabinose growth,-17,-7,activator,-10
+0,rspA,heat shock,-28,0,repressor,TF
+0,rspA,Iron supplement,-57,-18,activator,TF
+1,rspA,Iron supplement,1,17,activator,RNAP
+2,rspA,Iron supplement,-28,2,repressor,TF
+0,rspA,arabinose,-57,-18,activator,TF
+1,rspA,arabinose,-5,9,activator,-10
+2,rspA,arabinose,-17,2,repressor,TF
+0,rspA,LB,-56,-19,activator,TF
+1,rspA,LB,-5,17,activator,-10
+2,rspA,LB,-28,2,repressor,TF
+0,rspA,Anaerobic growth,-57,-18,activator,TF
+0,rspA,Anaerobic growth,-18,7,activator,RNAP
+1,rspA,Anaerobic growth,-17,2,repressor,TF
+0,rspA,Trehalose growth,-57,-18,activator,TF
+0,rspA,Trehalose growth,-18,12,activator,RNAP
+1,rspA,Trehalose growth,-17,0,repressor,TF
+0,rspA,Zinc growth,-56,-18,activator,TF
+1,rspA,Zinc growth,-6,7,activator,RNAP
+2,rspA,Zinc growth,-17,2,repressor,TF
+0,rspA,Xylose Arabinose growth,-56,-18,activator,TF
+0,rspA,Xylose Arabinose growth,-18,17,activator,RNAP
+1,rspA,Xylose Arabinose growth,-17,0,repressor,TF
+0,rspA,Xanthosine growth,-56,-19,activator,TF
+1,rspA,Xanthosine growth,-6,7,activator,RNAP
+2,rspA,Xanthosine growth,-17,0,repressor,TF
+0,ilvC,heat shock,-35,0,repressor,TF
+0,ilvC,Iron supplement,-75,-28,activator,TF
+1,ilvC,Iron supplement,-17,4,activator,-10
+2,ilvC,Iron supplement,-30,0,repressor,TF
+0,ilvC,LB,-33,0,repressor,TF
+0,ilvC,M9,-33,-11,activator,-10
+0,ilvC,Anaerobic growth,-24,0,repressor,TF
+0,ilvC,Zinc growth,-64,-28,activator,TF
+1,ilvC,Zinc growth,-17,-4,activator,-10
+2,ilvC,Zinc growth,-30,0,repressor,TF
+0,ilvC,Xylose Arabinose growth,-56,-28,activator,TF
+1,ilvC,Xylose Arabinose growth,-17,2,activator,-10
+2,ilvC,Xylose Arabinose growth,-30,0,repressor,TF
+0,ilvC,Xanthosine growth,-64,-52,activator,TF
+1,ilvC,Xanthosine growth,-42,-28,activator,-35
+2,ilvC,Xanthosine growth,-17,2,activator,-10
+3,ilvC,Xanthosine growth,-30,0,repressor,TF
+0,araC,heat shock,-66,-38,activator,RNAP
+1,araC,heat shock,-40,-31,repressor,TF
+0,araC,Iron supplement,-66,-24,activator,RNAP
+0,araC,arabinose,-66,-24,activator,RNAP
+1,araC,arabinose,-47,-27,repressor,TF
+0,araC,LB,-66,-24,activator,RNAP
+1,araC,LB,-16,-7,activator,-10
+2,araC,LB,-40,-31,repressor,TF
+0,araC,Anaerobic growth,-84,-24,activator,RNAP
+1,araC,Anaerobic growth,-40,-31,repressor,TF
+0,araC,0cAMP,-114,-98,activator,TF
+1,araC,0cAMP,-51,-32,activator,RNAP
+0,araC,Trehalose growth,-66,-24,activator,RNAP
+1,araC,Trehalose growth,-40,-31,repressor,TF
+0,araC,Zinc growth,-66,-24,activator,RNAP
+1,araC,Zinc growth,-40,-33,repressor,TF
+0,araC,Xylose Arabinose growth,-66,-24,activator,RNAP
+1,araC,Xylose Arabinose growth,-40,-27,repressor,TF
+0,araC,Xanthosine growth,-66,-24,activator,RNAP
+1,araC,Xanthosine growth,-93,-86,repressor,TF
+2,araC,Xanthosine growth,-40,-27,repressor,TF
+0,znuCB,heat shock,-14,0,activator,-10
+0,znuCB,Iron supplement,-14,-2,repressor,TF
+0,znuCB,LB,-25,0,activator,-10
+2,znuCB,LB,-14,-3,repressor,TF
+0,znuCB,Anaerobic growth,-16,-12,activator,-10
+1,znuCB,Anaerobic growth,-14,-2,repressor,TF
+0,znuCB,Zinc growth,-14,-2,repressor,TF
+0,znuCB,Xylose Arabinose growth,-18,-12,activator,-10
+1,znuCB,Xylose Arabinose growth,-14,0,repressor,TF
+0,znuCB,Xanthosine growth,-18,-8,activator,-10
+1,znuCB,Xanthosine growth,-18,-2,repressor,TF
+0,tar,heat shock,-5,1,activator,-10
+0,tar,LB,22,29,activator,RNAP
+0,tar,M9,-11,1,activator,-10
+1,tar,M9,21,29,activator,RNAP
+0,tar,Trehalose growth,-4,10,activator,-10
+0,sdaB,heat shock,-23,-2,activator,-10
+0,sdaB,Iron supplement,-29,-2,activator,-10
+0,sdaB,LB,-35,-24,activator,-35
+0,sdaB,M9,-27,-15,activator,-10
+0,sdaB,Anaerobic growth,-47,-33,activator,-35
+1,sdaB,Anaerobic growth,-21,-2,activator,-10
+0,sdaB,Trehalose growth,-29,-2,activator,-10
+0,sdaB,Zinc growth,-33,-2,activator,-10
+0,sdaB,Xylose Arabinose growth,-23,-2,activator,-10
+0,sdaB,Xanthosine growth,-47,-33,activator,-35
+1,sdaB,Xanthosine growth,-29,-15,activator,-10
+0,ymgG,SS,-51,-38,activator,TF
+0,ymgG,heat shock,-53,-34,activator,TF
+1,ymgG,heat shock,-13,2,activator,-10
+0,ymgG,M9,-111,-97,repressor,TF
+0,ymgG,Zinc growth,-50,-31,activator,TF
+0,ymgG,Xanthosine growth,-56,-32,activator,TF
+0,arcB,LB,-24,-2,activator,-10
+0,arcB,Xylose Arabinose growth,-60,-7,activator,RNAP
+0,rel,M9,-10,16,repressor,TF
+0,coaA,Iron supplement,-45,-30,activator,-35
+1,coaA,Iron supplement,-17,5,activator,-10
+2,coaA,Iron supplement,-37,-6,repressor,TF
+0,coaA,LB,-45,-30,activator,-35
+1,coaA,LB,-17,-7,activator,-10
+3,coaA,LB,-18,1,repressor,TF
+0,coaA,Anaerobic growth,-45,7,activator,-10
+2,coaA,Anaerobic growth,-37,-6,repressor,TF
+0,coaA,acetate,-16,-8,activator,-10
+2,coaA,acetate,-18,-4,repressor,TF
+0,coaA,phoP,-45,-30,activator,-35
+1,coaA,phoP,-19,-8,activator,-10
+0,coaA,Trehalose growth,-28,0,activator,-10
+1,coaA,Trehalose growth,-37,-4,repressor,TF
+0,coaA,Zinc growth,-16,-8,activator,-10
+2,coaA,Zinc growth,-18,-4,repressor,TF
+0,coaA,Xylose Arabinose growth,-45,-21,activator,-35
+1,coaA,Xylose Arabinose growth,-17,-1,activator,-10
+3,coaA,Xylose Arabinose growth,-37,1,repressor,TF
+0,coaA,Xanthosine growth,-45,-30,activator,-35
+1,coaA,Xanthosine growth,-25,-8,activator,-10
+2,coaA,Xanthosine growth,-37,1,repressor,TF
+0,ybiO,heat shock,2,29,activator,RNAP
+1,ybiO,heat shock,-11,21,repressor,TF
+0,ybiO,Iron supplement,4,29,activator,RNAP
+1,ybiO,Iron supplement,-3,15,repressor,TF
+0,ybiO,LB,-32,-12,activator,-35
+1,ybiO,LB,-11,15,repressor,TF
+0,ybiO,Trehalose growth,-5,15,repressor,TF
+0,ybiO,Zinc growth,10,26,activator,RNAP
+1,ybiO,Zinc growth,-11,15,repressor,TF
+0,ybiO,Xylose Arabinose growth,2,28,activator,RNAP
+1,ybiO,Xylose Arabinose growth,-11,15,repressor,TF
+0,ybiO,Xanthosine growth,-27,-12,activator,-35
+1,ybiO,Xanthosine growth,-11,15,repressor,TF
+0,ybdG,LB,-35,0,activator,-10
+0,ybdG,Xanthosine growth,-11,4,activator,-10
+0,ycbZ,heat shock,-37,-23,activator,-35
+1,ycbZ,heat shock,-14,8,activator,-10
+0,ycbZ,Iron supplement,-37,-23,activator,-35
+1,ycbZ,Iron supplement,-14,4,activator,-10
+0,ycbZ,LB,-39,-18,activator,TF
+0,ycbZ,LB,-18,-3,activator,-10
+0,ycbZ,Anaerobic growth,-38,-18,activator,TF
+0,ycbZ,Anaerobic growth,-18,-3,activator,-10
+0,ycbZ,phoP,-37,-18,activator,TF
+0,ycbZ,phoP,-18,-4,activator,-10
+0,ycbZ,0cAMP,-14,-4,activator,-10
+0,ycbZ,Trehalose growth,-37,-23,activator,-35
+1,ycbZ,Trehalose growth,-14,8,activator,-10
+0,ycbZ,Zinc growth,-37,-23,activator,-35
+1,ycbZ,Zinc growth,-14,8,activator,-10
+0,ycbZ,Xylose Arabinose growth,-37,-18,activator,TF
+0,ycbZ,Xylose Arabinose growth,-18,8,activator,-10
+0,ycbZ,Xanthosine growth,-38,-18,activator,TF
+0,ycbZ,Xanthosine growth,-18,8,activator,-10
+0,acuI,heat shock,-113,-88,activator,RNAP
+1,acuI,heat shock,-38,-16,activator,RNAP
+0,acuI,Iron supplement,-113,-101,activator,RNAP
+1,acuI,Iron supplement,-37,-16,activator,RNAP
+0,acuI,LB,-113,-101,activator,RNAP
+1,acuI,LB,-31,-16,activator,RNAP
+0,acuI,M9,-113,-100,activator,RNAP
+1,acuI,M9,-26,-16,activator,RNAP
+0,acuI,Anaerobic growth,-103,-99,activator,RNAP
+1,acuI,Anaerobic growth,-37,-16,activator,RNAP
+2,acuI,Anaerobic growth,-4,8,activator,RNAP
+0,acuI,Trehalose growth,-37,-16,activator,RNAP
+0,acuI,Zinc growth,-101,-88,activator,RNAP
+1,acuI,Zinc growth,-26,-16,activator,RNAP
+0,acuI,Xylose Arabinose growth,-113,-100,activator,RNAP
+1,acuI,Xylose Arabinose growth,-37,-16,activator,RNAP
+0,acuI,Xanthosine growth,-113,-88,activator,RNAP
+1,acuI,Xanthosine growth,-31,-16,activator,RNAP
+0,leuABCD,heat shock,-38,-6,activator,RNAP
+0,leuABCD,Iron supplement,-38,7,activator,RNAP
+0,leuABCD,LB,-39,-4,activator,RNAP
+1,leuABCD,LB,-15,-8,repressor,TF
+2,leuABCD,LB,3,14,repressor,TF
+0,leuABCD,Anaerobic growth,-39,-31,activator,-35
+1,leuABCD,Anaerobic growth,-14,-6,activator,-10
+0,leuABCD,acetate,-50,-6,activator,RNAP
+0,leuABCD,0cAMP,-47,-31,activator,-35
+1,leuABCD,0cAMP,-13,-6,activator,-10
+2,leuABCD,0cAMP,-10,3,repressor,TF
+0,leuABCD,Trehalose growth,-47,-6,activator,RNAP
+1,leuABCD,Trehalose growth,-18,-10,repressor,TF
+0,leuABCD,Zinc growth,-50,-6,activator,RNAP
+1,leuABCD,Zinc growth,24,29,repressor,TF
+0,leuABCD,fum1,-48,-5,activator,RNAP
+0,leuABCD,Xylose Arabinose growth,-38,-6,activator,RNAP
+0,leuABCD,Xanthosine growth,-38,-6,activator,RNAP
+0,ybjL,heat shock,-14,0,activator,-10
+1,ybjL,heat shock,-20,-7,repressor,TF
+0,ybjL,Iron supplement,-26,-2,activator,-10
+1,ybjL,Iron supplement,-11,-7,repressor,TF
+0,ybjL,LB,-65,-53,activator,-35
+1,ybjL,LB,-19,-7,activator,-10
+2,ybjL,LB,-87,-78,repressor,TF
+3,ybjL,LB,-14,-2,repressor,TF
+0,ybjL,Anaerobic growth,-62,-53,activator,-35
+1,ybjL,Anaerobic growth,-87,-78,repressor,TF
+2,ybjL,Anaerobic growth,-14,-2,repressor,TF
+0,ybjL,Trehalose growth,-62,-53,activator,-35
+1,ybjL,Trehalose growth,-20,-7,activator,-10
+2,ybjL,Trehalose growth,3,13,repressor,TF
+0,ybjL,Zinc growth,-65,-53,activator,-35
+1,ybjL,Zinc growth,-15,-7,activator,-10
+0,ybjL,Xylose Arabinose growth,-65,-53,activator,-35
+1,ybjL,Xylose Arabinose growth,-15,-7,activator,-10
+2,ybjL,Xylose Arabinose growth,-80,-78,repressor,TF
+3,ybjL,Xylose Arabinose growth,-14,-2,repressor,TF
+0,ybjL,Xanthosine growth,-65,-47,activator,-35
+1,ybjL,Xanthosine growth,-80,-78,repressor,TF
+2,ybjL,Xanthosine growth,-14,-2,repressor,TF
+0,yecE,heat shock,-6,8,activator,-10
+1,yecE,heat shock,-35,3,repressor,TF
+0,yecE,Iron supplement,-31,17,activator,RNAP
+1,yecE,Iron supplement,-4,9,repressor,TF
+0,yecE,LB,-31,4,activator,RNAP
+1,yecE,LB,-6,4,repressor,TF
+0,yecE,M9,-6,9,activator,RNAP
+1,yecE,M9,-35,-10,repressor,TF
+0,yecE,Anaerobic growth,-31,17,activator,RNAP
+1,yecE,Anaerobic growth,-6,9,repressor,TF
+0,yecE,phoP,-32,14,activator,RNAP
+1,yecE,phoP,-6,9,repressor,TF
+0,yecE,deoR,-2,12,activator,RNAP
+0,yecE,Zinc growth,-40,3,activator,RNAP
+1,yecE,Zinc growth,-6,9,repressor,TF
+0,yecE,Xylose Arabinose growth,-32,3,activator,RNAP
+1,yecE,Xylose Arabinose growth,-6,9,repressor,TF
+0,yecE,Xanthosine growth,-34,3,activator,RNAP
+1,yecE,Xanthosine growth,-6,9,repressor,TF
+0,pitA,LB,-21,-3,activator,-10
+0,dusC,heat shock,-48,-42,activator,-35
+1,dusC,heat shock,-30,-19,activator,-35
+2,dusC,heat shock,-43,-16,repressor,TF
+0,dusC,Iron supplement,-48,-40,activator,-35
+1,dusC,Iron supplement,-30,-18,activator,-35
+2,dusC,Iron supplement,-43,-16,repressor,TF
+0,dusC,LB,-48,-42,activator,-35
+1,dusC,LB,-26,-18,activator,-10
+0,dusC,M9,-29,-16,activator,-10
+1,dusC,M9,-26,-19,repressor,TF
+0,dusC,Anaerobic growth,-48,-42,activator,-35
+1,dusC,Anaerobic growth,-28,-18,activator,-10
+0,dusC,0cAMP,-54,-46,activator,-35
+1,dusC,0cAMP,-24,-6,activator,-10
+0,dusC,Trehalose growth,-48,-42,activator,-35
+1,dusC,Trehalose growth,-30,-19,activator,-10
+2,dusC,Trehalose growth,-43,-16,repressor,TF
+0,dusC,Zinc growth,-48,-42,activator,-35
+1,dusC,Zinc growth,-30,-18,activator,-10
+2,dusC,Zinc growth,-43,-16,repressor,TF
+0,dusC,Xylose Arabinose growth,-48,-18,activator,RNAP
+1,dusC,Xylose Arabinose growth,-43,-16,repressor,TF
+0,dusC,Xanthosine growth,-48,-42,activator,-35
+1,dusC,Xanthosine growth,-30,-18,activator,-10
+2,dusC,Xanthosine growth,-43,-16,repressor,TF
+0,ybjX,LB,-90,-72,activator,TF
+1,ybjX,LB,-17,-8,activator,-10
+0,dinJ,heat shock,-35,-33,activator,-35
+1,dinJ,heat shock,-17,-4,activator,-10
+3,dinJ,heat shock,5,14,repressor,TF
+0,dinJ,Iron supplement,-35,-32,activator,-35
+1,dinJ,Iron supplement,-17,-4,activator,-10
+0,dinJ,LB,-35,-32,activator,-35
+1,dinJ,LB,-17,-4,activator,-10
+0,dinJ,Anaerobic growth,-35,-4,activator,-10
+0,dinJ,0cAMP,-44,-26,activator,-35
+1,dinJ,0cAMP,-17,-7,activator,-10
+0,dinJ,Trehalose growth,-35,-33,activator,-35
+1,dinJ,Trehalose growth,-12,-4,activator,-10
+0,dinJ,Zinc growth,-35,-32,activator,-35
+1,dinJ,Zinc growth,-17,-4,activator,-10
+0,dinJ,Xylose Arabinose growth,-35,-32,activator,-35
+1,dinJ,Xylose Arabinose growth,-17,-4,activator,-10
+0,dinJ,Xanthosine growth,-35,-32,activator,-35
+1,dinJ,Xanthosine growth,-16,-6,activator,-10
+0,aphA,heat shock,-19,-8,activator,-10
+1,aphA,heat shock,-20,1,repressor,TF
+0,aphA,Iron supplement,-36,-30,activator,-35
+1,aphA,Iron supplement,-19,-1,activator,-10
+2,aphA,Iron supplement,-20,-6,repressor,TF
+0,aphA,LB,-43,-30,activator,-35
+1,aphA,LB,-14,-2,activator,-10
+2,aphA,LB,-21,-6,repressor,TF
+0,aphA,M9,-16,-7,repressor,TF
+0,aphA,Anaerobic growth,-71,-30,activator,TF
+1,aphA,Anaerobic growth,-17,7,activator,-10
+2,aphA,Anaerobic growth,-21,-7,repressor,TF
+0,aphA,deoR,-43,-29,activator,-35
+1,aphA,deoR,-15,-1,activator,-10
+2,aphA,deoR,-21,-6,repressor,TF
+0,aphA,0cAMP,-21,-7,repressor,TF
+0,aphA,Trehalose growth,-36,-30,activator,-35
+1,aphA,Trehalose growth,-14,-1,activator,-10
+2,aphA,Trehalose growth,-73,-62,repressor,TF
+3,aphA,Trehalose growth,-18,-7,repressor,TF
+0,aphA,Zinc growth,-36,-30,activator,-35
+1,aphA,Zinc growth,-19,-1,activator,-10
+2,aphA,Zinc growth,-20,1,repressor,TF
+0,aphA,Xylose Arabinose growth,-36,-30,activator,-35
+1,aphA,Xylose Arabinose growth,-15,-2,activator,-10
+2,aphA,Xylose Arabinose growth,-73,-68,repressor,TF
+3,aphA,Xylose Arabinose growth,-21,-6,repressor,TF
+0,aphA,Xanthosine growth,-36,-30,activator,-35
+1,aphA,Xanthosine growth,-17,-7,activator,-10
+2,aphA,Xanthosine growth,-73,-62,repressor,TF
+3,aphA,Xanthosine growth,-21,-6,repressor,TF
+0,poxB,heat shock,-26,0,activator,-10
+0,poxB,Iron supplement,-18,-8,activator,-10
+0,poxB,Zinc growth,-18,-8,activator,-10
+0,poxB,Xylose Arabinose growth,-18,-8,activator,-10
+0,yjjJ,heat shock,-22,8,repressor,TF
+0,yjjJ,heat shock,30,45,repressor,TF
+0,yjjJ,Iron supplement,9,22,activator,-10
+1,yjjJ,Iron supplement,-24,10,repressor,TF
+1,yjjJ,LB,-18,-6,activator,-35
+2,yjjJ,LB,15,16,repressor,TF
+0,yjjJ,Anaerobic growth,-24,14,activator,RNAP
+0,yjjJ,phoP,-18,19,activator,RNAP
+0,yjjJ,Trehalose growth,-1,11,activator,-10
+1,yjjJ,Trehalose growth,-13,14,repressor,TF
+0,yjjJ,Zinc growth,-13,-7,repressor,TF
+0,yjjJ,Xylose Arabinose growth,-24,19,activator,RNAP
+1,yjjJ,Xylose Arabinose growth,15,18,repressor,TF
+0,yjjJ,Xanthosine growth,-22,14,activator,RNAP
+0,yeiQ,LB,-44,-34,activator,-35
+0,yeiQ,Anaerobic growth,-76,-51,activator,TF
+1,yeiQ,Anaerobic growth,-25,-7,activator,-10
+0,yeiQ,Trehalose growth,-77,-62,activator,TF
+1,yeiQ,Trehalose growth,-13,-8,activator,-10
+0,yeiQ,Xylose Arabinose growth,-77,-64,activator,TF
+1,yeiQ,Xylose Arabinose growth,-36,-27,activator,-35
+2,yeiQ,Xylose Arabinose growth,-19,5,activator,-10
+0,yeiQ,Xanthosine growth,-77,-64,activator,TF
+1,yeiQ,Xanthosine growth,-13,0,activator,-10
+0,rapA,heat shock,-109,-99,activator,RNAP
+1,rapA,heat shock,-13,11,repressor,TF
+0,rapA,Iron supplement,-46,-25,activator,RNAP
+1,rapA,Iron supplement,-16,-5,activator,RNAP
+2,rapA,Iron supplement,-34,-19,repressor,TF
+3,rapA,Iron supplement,-14,8,repressor,TF
+0,rapA,LB,-44,-5,activator,RNAP
+1,rapA,LB,-11,3,repressor,TF
+0,rapA,M9,-15,11,repressor,TF
+1,rapA,M9,-112,-99,activator,RNAP
+0,rapA,Anaerobic growth,-35,-5,activator,RNAP
+1,rapA,Anaerobic growth,-19,-8,repressor,TF
+0,rapA,deoR,-109,-90,activator,RNAP
+0,rapA,Trehalose growth,-38,-30,activator,RNAP
+1,rapA,Trehalose growth,-12,-5,activator,-10
+2,rapA,Trehalose growth,-13,11,repressor,TF
+0,rapA,Zinc growth,-36,-5,activator,RNAP
+1,rapA,Zinc growth,-34,11,repressor,TF
+0,rapA,Xylose Arabinose growth,-36,-5,activator,RNAP
+1,rapA,Xylose Arabinose growth,-34,8,repressor,TF
+0,rapA,Xanthosine growth,-36,-5,activator,RNAP
+1,rapA,Xanthosine growth,-19,0,repressor,TF
+0,rumB,Anaerobic growth,-45,3,activator,RNAP
+0,thiM,heat shock,-42,-29,activator,-35
+1,thiM,heat shock,-13,2,activator,-10
+2,thiM,heat shock,-9,4,repressor,TF
+0,thiM,Iron supplement,-42,2,activator,RNAP
+0,thiM,LB,-42,-29,activator,-35
+1,thiM,LB,-12,1,activator,-10
+0,thiM,M9,-42,-29,activator,-35
+1,thiM,M9,-12,2,activator,-10
+0,thiM,Anaerobic growth,-46,-29,activator,-35
+1,thiM,Anaerobic growth,-13,-4,activator,-10
+0,thiM,acetate,-42,2,activator,RNAP
+0,thiM,deoR,-12,1,repressor,TF
+0,thiM,0cAMP,-46,-7,activator,RNAP
+0,thiM,Trehalose growth,-42,-29,activator,-35
+1,thiM,Trehalose growth,-13,2,activator,-10
+0,thiM,Zinc growth,-46,-29,activator,-35
+1,thiM,Zinc growth,-13,2,activator,-10
+0,thiM,fum1,-35,2,activator,-10
+0,thiM,Xylose Arabinose growth,-46,-29,activator,-35
+1,thiM,Xylose Arabinose growth,-13,2,activator,-10
+0,thiM,Xanthosine growth,-42,-29,activator,-35
+1,thiM,Xanthosine growth,-12,1,activator,-10
+0,minC,heat shock,-38,-31,activator,-35
+1,minC,heat shock,-15,-2,activator,-10
+0,minC,Iron supplement,-38,-34,activator,-35
+1,minC,Iron supplement,-15,-3,activator,-10
+0,minC,LB,-38,-34,activator,-35
+1,minC,LB,-15,-2,activator,-10
+0,minC,Anaerobic growth,-38,-2,activator,RNAP
+0,minC,Trehalose growth,-38,-31,activator,-35
+1,minC,Trehalose growth,-15,-1,activator,-10
+0,minC,Zinc growth,-37,-31,activator,-35
+1,minC,Zinc growth,-15,-1,activator,-10
+0,minC,Xylose Arabinose growth,-37,-31,activator,-35
+1,minC,Xylose Arabinose growth,-15,-2,activator,-10
+0,minC,Xanthosine growth,-39,-29,activator,-35
+1,minC,Xanthosine growth,-15,-5,activator,-10
+0,arcA,Iron supplement,-103,-87,activator,RNAP
+0,arcA,LB,-106,-87,activator,RNAP
+1,arcA,LB,-64,-56,repressor,TF
+0,arcA,Anaerobic growth,-99,-63,activator,TF
+1,arcA,Anaerobic growth,-21,-8,activator,-10
+0,arcA,Trehalose growth,-104,-87,activator,RNAP
+0,arcA,Zinc growth,-104,-87,activator,RNAP
+1,arcA,Zinc growth,-64,-56,repressor,TF
+0,arcA,Xylose Arabinose growth,-104,-87,activator,RNAP
+1,arcA,Xylose Arabinose growth,-64,-56,repressor,TF
+0,arcA,Xanthosine growth,-114,-91,activator,RNAP
+1,arcA,Xanthosine growth,-64,-56,repressor,TF
+0,holC,heat shock,-35,7,activator,RNAP
+0,holC,Anaerobic growth,-35,-24,activator,RNAP
+0,tff-rpsB-tsf,heat shock,-90,-80,activator,RNAP
+1,tff-rpsB-tsf,heat shock,-44,-35,activator,-35
+2,tff-rpsB-tsf,heat shock,-18,-9,activator,-10
+3,tff-rpsB-tsf,heat shock,-8,7,repressor,TF
+0,tff-rpsB-tsf,Iron supplement,-44,-35,activator,-35
+1,tff-rpsB-tsf,Iron supplement,-18,0,activator,-10
+0,tff-rpsB-tsf,LB,-44,-31,activator,-35
+1,tff-rpsB-tsf,LB,-19,-8,activator,-10
+0,tff-rpsB-tsf,Anaerobic growth,-44,-35,activator,-35
+1,tff-rpsB-tsf,Anaerobic growth,-19,0,activator,-10
+0,tff-rpsB-tsf,phoP,-44,-31,activator,-35
+1,tff-rpsB-tsf,phoP,-18,0,activator,-10
+0,tff-rpsB-tsf,0cAMP,-44,-31,activator,-35
+1,tff-rpsB-tsf,0cAMP,-19,0,activator,-10
+0,tff-rpsB-tsf,Trehalose growth,-44,-31,activator,-35
+1,tff-rpsB-tsf,Trehalose growth,-18,0,activator,-10
+2,tff-rpsB-tsf,Trehalose growth,-6,7,repressor,TF
+0,tff-rpsB-tsf,Zinc growth,-44,-35,activator,-35
+1,tff-rpsB-tsf,Zinc growth,-19,0,activator,-10
+0,tff-rpsB-tsf,Xylose Arabinose growth,-45,-36,activator,-35
+1,tff-rpsB-tsf,Xylose Arabinose growth,-19,0,activator,-10
+0,tff-rpsB-tsf,Xanthosine growth,-45,-31,activator,-35
+1,tff-rpsB-tsf,Xanthosine growth,-19,-8,activator,-10
+0,ygeR,heat shock,-54,-22,activator,-35
+1,ygeR,heat shock,-14,4,activator,-10
+0,ygeR,Iron supplement,-34,-23,activator,-35
+1,ygeR,Iron supplement,-14,-6,activator,-10
+0,ygeR,arabinose,-14,-5,activator,-10
+0,ygeR,LB,-45,-33,activator,-35
+1,ygeR,LB,-14,-6,activator,-10
+0,ygeR,Anaerobic growth,-34,-5,activator,RNAP
+0,ygeR,Zinc growth,-35,-26,activator,-35
+1,ygeR,Zinc growth,-14,5,activator,-10
+0,ygeR,Xylose Arabinose growth,-42,-5,activator,RNAP
+0,ygeR,Xanthosine growth,-34,5,activator,RNAP
+0,xylA,Xylose Arabinose growth,-88,-55,activator,TF
+0,xylA,Xylose Arabinose growth,-55,-21,activator,TF
+0,mscS,heat shock,-37,-30,activator,-35
+1,mscS,heat shock,-23,-14,activator,TF
+1,mscS,heat shock,-14,-6,activator,-10
+0,mscS,Iron supplement,-19,-6,activator,-10
+0,mscS,LB,-47,0,activator,RNAP
+0,mscS,Zinc growth,-23,-14,activator,TF
+0,mscS,Zinc growth,-14,-6,activator,-10
+0,mscS,Xylose Arabinose growth,-39,-37,activator,-35
+1,mscS,Xylose Arabinose growth,-22,-14,activator,TF
+1,mscS,Xylose Arabinose growth,-14,-6,activator,-10
+0,mscS,Xanthosine growth,-23,-14,activator,TF
+0,mscS,Xanthosine growth,-14,-7,activator,-10
+0,marR,LB,-84,-65,activator,TF
+1,marR,LB,-46,-40,activator,-35
+2,marR,LB,-23,-18,activator,-10
+3,marR,LB,-34,-24,repressor,TF
+4,marR,LB,-14,14,repressor,TF
+0,fdhE,heat shock,-115,-99,activator,RNAP
+0,fdhE,Iron supplement,-12,-8,activator,-10
+1,fdhE,Iron supplement,-46,-33,repressor,TF
+0,fdhE,LB,-19,-8,activator,-10
+0,fdhE,M9,-115,-99,activator,RNAP
+0,fdhE,Anaerobic growth,-50,-34,activator,TF
+1,fdhE,Anaerobic growth,-19,4,activator,-10
+0,fdhE,Trehalose growth,-19,-8,activator,-10
+0,fdhE,Zinc growth,-19,-8,activator,-10
+0,fdhE,Xylose Arabinose growth,-19,-8,activator,-10
+1,fdhE,Xylose Arabinose growth,-48,-33,repressor,TF
+0,fdhE,Xanthosine growth,-19,-1,activator,-10
+1,fdhE,Xanthosine growth,-46,-33,repressor,TF
+0,ykgE,heat shock,-45,-16,repressor,TF
+1,ykgE,heat shock,-72,-37,activator,RNAP
+0,ykgE,Iron supplement,-72,-37,activator,RNAP
+1,ykgE,Iron supplement,-45,-16,repressor,TF
+0,ykgE,LB,-72,-37,activator,RNAP
+1,ykgE,LB,-45,-22,repressor,TF
+0,ykgE,M9,-45,-22,repressor,TF
+1,ykgE,M9,-65,-59,activator,-35
+2,ykgE,M9,-48,-37,repressor,-10
+0,ykgE,Anaerobic growth,-102,-80,activator,TF
+1,ykgE,Anaerobic growth,-75,-36,activator,RNAP
+2,ykgE,Anaerobic growth,-44,-22,repressor,TF
+0,ykgE,Trehalose growth,-98,-90,activator,TF
+1,ykgE,Trehalose growth,-72,-37,activator,RNAP
+2,ykgE,Trehalose growth,-44,-22,repressor,TF
+0,ykgE,Zinc growth,-74,-37,activator,RNAP
+1,ykgE,Zinc growth,-44,-22,repressor,TF
+0,ykgE,Xylose Arabinose growth,-74,-36,activator,RNAP
+1,ykgE,Xylose Arabinose growth,-44,-22,repressor,TF
+0,ykgE,Xanthosine growth,-72,-37,activator,RNAP
+1,ykgE,Xanthosine growth,-44,-16,repressor,TF
+0,mutM,LB,-23,-9,repressor,TF
+0,ftsK,Iron supplement,-16,-11,activator,-10
+0,ftsK,LB,-48,-11,activator,RNAP
+1,ftsK,Anaerobic growth,-16,-11,activator,-10
+0,ftsK,Zinc growth,-16,-11,activator,-10
+0,ftsK,Xylose Arabinose growth,-38,-35,activator,-35
+1,ftsK,Xylose Arabinose growth,-16,-11,activator,-10
+0,ftsK,Xanthosine growth,-48,-35,activator,-35
+1,ftsK,Xanthosine growth,-21,-11,activator,-10
+0,ftsK,acetate,-8,4,repressor,TF
+0,maoP,heat shock,-79,-71,activator,TF
+1,maoP,heat shock,-60,-5,activator,RNAP
+2,maoP,heat shock,-24,-11,repressor,TF
+0,maoP,Iron supplement,-79,-55,activator,TF
+0,maoP,Iron supplement,-55,-35,activator,TF
+0,maoP,Iron supplement,-24,-8,activator,-10
+1,maoP,Iron supplement,-24,-13,repressor,TF
+0,maoP,LB,-79,-55,activator,TF
+0,maoP,LB,-55,-35,activator,TF
+0,maoP,LB,-24,-8,activator,-10
+0,maoP,M9,-22,-12,repressor,TF
+0,maoP,Anaerobic growth,-80,-17,activator,TF
+0,maoP,phoP,-100,-71,activator,TF
+0,maoP,0cAMP,-79,-55,activator,TF
+0,maoP,0cAMP,-55,-35,activator,TF
+0,maoP,0cAMP,-24,-8,activator,-10
+0,maoP,Zinc growth,-80,-55,activator,TF
+0,maoP,Zinc growth,-55,-35,activator,TF
+0,maoP,Zinc growth,-24,-5,activator,-10
+1,maoP,Zinc growth,-24,-13,repressor,TF
+0,maoP,Xylose Arabinose growth,-79,-55,activator,TF
+0,maoP,Xylose Arabinose growth,-55,-35,activator,TF
+0,maoP,Xylose Arabinose growth,-24,-6,activator,-10
+1,maoP,Xylose Arabinose growth,-22,-13,repressor,TF
+0,maoP,Xanthosine growth,-72,-59,activator,TF
+1,maoP,Xanthosine growth,-51,-35,activator,TF
+1,maoP,Xanthosine growth,-35,-6,activator,-10
+2,maoP,Xanthosine growth,-25,-13,repressor,TF
