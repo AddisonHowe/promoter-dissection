@@ -1,1 +1,1 @@
-from .plotting import plot_data, plot_data_2d
+from .plotting import plot_data, plot_data_2d, DEFAULT_CMAP

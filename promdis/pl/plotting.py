@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm
 from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
+DEFAULT_CMAP = "RdBu_r"
 
 def plot_data(
         values, 
@@ -67,7 +68,7 @@ def plot_data_2d(
         msg = f"Got {np.ndim(values)}-dimensional input values. Should be 2D."
         raise RuntimeError(msg)
     
-    cmap = kwargs.get('cmap', plt.cm.bwr.copy())
+    cmap = kwargs.get('cmap', plt.cm.get_cmap(DEFAULT_CMAP).copy())
     if isinstance(cmap, str):
         cmap = plt.cm.get_cmap(cmap)
     if nan_color:

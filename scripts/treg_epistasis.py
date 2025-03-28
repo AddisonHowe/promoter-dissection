@@ -18,7 +18,9 @@ import equinox as eqx
 from promdis.processing import get_sequence_arrays_and_counts, gene_seq_to_array
 from promdis.jax.core import compute_expression_shift_by_mutation
 from promdis.jax.core import compute_expression_shift_by_pairwise_mutation
-from promdis.pl import plot_data_2d
+from promdis.pl import plot_data_2d, DEFAULT_CMAP
+
+CMAP = DEFAULT_CMAP
 
 #######################
 ##  Parse arguments  ##
@@ -116,7 +118,7 @@ np.save(f"{OUTDIR}/eta.npy", eta)
 # Plotting 
 ax = plot_data_2d(
     xi_2mut,
-    cmap='RdBu_r',
+    cmap=CMAP,
 )
 ax.set_title("$\\xi[i,j]$ for 2 mutations across 2 segments")
 plt.savefig(f"{IMGDIR}/xi_pairwise.{img_format}")
@@ -124,7 +126,7 @@ plt.close()
 
 ax = plot_data_2d(
     eta,
-    cmap='RdBu_r',
+    cmap=CMAP,
 )
 ax.set_title("$\\eta[i,j]$")
 plt.savefig(f"{IMGDIR}/eta.{img_format}")
@@ -132,7 +134,7 @@ plt.close()
 
 ax = plot_data_2d(
     eta,
-    cmap='RdBu_r',
+    cmap=CMAP,
     vmax=0.3,
 )
 ax.set_title("$\\eta[i,j]$")
