@@ -18,6 +18,7 @@ import equinox as eqx
 from promdis.processing import get_sequence_arrays_and_counts, gene_seq_to_array
 from promdis.jax.core import compute_expression_shift_by_mutation
 from promdis.jax.core import compute_expression_shift_by_pairwise_mutation
+from promdis.jax.core import compute_epistasis_effect
 from promdis.pl import plot_data_2d
 
 #######################
@@ -96,23 +97,10 @@ wt_seq = gene_seq_to_array(gene_wt_seq)
 ##  Compute epistasis effect for observed data  ##
 ##################################################
 
-# All instances with one mutation at a single position. 
-xi_1mut, _ = compute_expression_shift_by_mutation(
+eta, (xi_1mut, xi_2mut) = compute_epistasis_effect(
     seqs, expression, wt_seq, 
     segment_size=1,
-    profile_groups=[(1,)]
 )
-
-# All instances with one mutation on both segments.
-xi_2mut, _ = compute_expression_shift_by_pairwise_mutation(
-    seqs, expression, wt_seq,
-    segment_size=1,
-    profile_groups=[((1,),(1,))],
-)
-
-# Difference between two-segment mutations and *two* one-segment mutations
-eta = xi_2mut - xi_1mut[None,:] - xi_1mut[:,None]
-print("eta contains nan?: ", np.any(np.isnan(eta)))
 
 # Save results
 np.save(f"{OUTDIR}/xi_1mut.npy", xi_1mut)
@@ -165,22 +153,11 @@ def bootstrap_computations(seqs, expression, wt_seq, key):
     boot_seqs, boot_expression = generate_bootstrapped_data(
         seqs, expression, wt_seq, key, 
     )
-
-    # All instances with one mutation at a single position. 
-    xi_1mut, _ = compute_expression_shift_by_mutation(
-        boot_seqs, boot_expression, wt_seq, 
-        segment_size=1,
-        profile_groups=[(1,)]
-    )
-
-    # All instances with one mutation on both segments.
-    xi_2mut, _ = compute_expression_shift_by_pairwise_mutation(
-        boot_seqs, boot_expression, wt_seq, 
-        segment_size=1,
-        profile_groups=[((1,),(1,))],
-    )
     # Compute eta
-    eta = xi_2mut - xi_1mut[None,:] - xi_1mut[:,None]
+    eta, (xi_1mut, xi_2mut) = compute_epistasis_effect(
+        boot_seqs, boot_expression, wt_seq, 
+        segment_size=1,
+    )
     return eta, xi_1mut, xi_2mut
 
 

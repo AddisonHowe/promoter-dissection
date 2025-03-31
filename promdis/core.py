@@ -484,6 +484,60 @@ def compute_expression_shift_by_pairwise_mutation(
         return expression_shift, profile_groups
 
 
+###########################################
+##  Pairwise segment mutation functions  ##
+###########################################
+
+def compute_epistasis_effect(
+        sequences,
+        expression,
+        wt_seq,
+        segment_size,
+):
+    """Difference in expression shift for simultaneous vs independent mutations.
+
+    The epistasis effect eta is defined as xi[i,j] - xi[i,*] - xi[*,j], where
+    xi[i,j] is the mean expression shift resulting from simultaneouslt mutating
+    segments i and j; xi[i,*] is the mean expression shift resulting from 
+    mutating segment i and leaving segment j the wildtype; and analogously for 
+    xi[*,j].
+
+    Args:
+        sequences (np.ndarray[np.uint8]): Shape (nseqs, nbases).
+        expression (np.ndarray[int]): Shape (nseqs,).
+        wt_seq (np.ndarray[np.uint8]): Shape (nbases,)
+        segment_size (int): Segment size.
+
+    Returns:
+        np.ndarray: Shape (L,L). Epistasis effect eta.
+        tuple[np.ndarray, np.ndarray]: Expression shift matrices corresponding 
+            to single mutation and double mutation.
+    """
+    if segment_size == 1:
+        profile_groups = [
+            [((1,),(0,))], # 1 mutation
+            [((1,),(1,))], # 2 mutations
+        ]
+    elif segment_size == 2:
+        profile_groups = [
+            [((0,1),(0,0)),((1,0),(0,0))], # 1 mutation
+            [((0,1),(0,1)),((1,0),(1,0)),
+             ((0,1),(1,0)),((1,0),(0,1))], # 2 mutations
+        ]
+    else:
+        msg = f"Segment size {segment_size} not yet implemented for epistasis."
+        raise NotImplementedError(msg)
+
+    (xi_1mut, xi_2mut), _ = compute_expression_shift_by_pairwise_mutation(
+        sequences, expression, wt_seq,
+        segment_size=segment_size,
+        profile_groups=profile_groups,
+    )
+
+    eta = xi_2mut - xi_1mut - xi_1mut.T
+    return eta, (xi_1mut, xi_2mut)
+
+
 #####################
 ##  Miscellaneous  ##
 #####################
