@@ -88,7 +88,7 @@ def main(args):
     # Plot mean wildtype expression (1 dimension)
     ax = plot_data(
         mu_1d[0], segment_size=1, bin_size=1,
-        cmap='viridis',
+        color='g',
     )
     ax.set_title(f"{gene} mean wildtype expression $\\mu_{{i}}^*$")
     ax.set_xlabel(f"segment $i$")

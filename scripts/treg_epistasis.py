@@ -16,8 +16,6 @@ import jax.random as jrandom
 import equinox as eqx
 
 from promdis.processing import get_sequence_arrays_and_counts, gene_seq_to_array
-from promdis.jax.core import compute_expression_shift_by_mutation
-from promdis.jax.core import compute_expression_shift_by_pairwise_mutation
 from promdis.jax.core import compute_epistasis_effect
 from promdis.pl import plot_data_2d, DEFAULT_CMAP
 

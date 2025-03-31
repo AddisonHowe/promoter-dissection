@@ -16,6 +16,7 @@ from promdis.jax.core import compute_mean_expression_by_mutation
 from promdis.jax.core import compute_mean_expression_by_pairwise_mutation
 from promdis.jax.core import compute_expression_shift_by_mutation
 from promdis.jax.core import compute_expression_shift_by_pairwise_mutation
+from promdis.jax.core import compute_epistasis_effect
 from promdis.pl import plot_data, plot_data_2d
 
 #######################
@@ -306,4 +307,33 @@ ax = plot_data_2d(
 )
 ax.set_title("$\\eta_{i,j}$")
 plt.savefig(f"{IMGDIR}/eta_v2_doublet.{img_format}")
+plt.close()
+
+
+#######################################################################
+##  Compute epistasis effect using function (singlets and doublets)  ##
+#######################################################################
+
+eta_singlet_official, _ = compute_epistasis_effect(
+    seqs, expression, wt_seq, segment_size=1
+)
+
+eta_doublet_official, _ = compute_epistasis_effect(
+    seqs, expression, wt_seq, segment_size=2
+)
+
+ax = plot_data_2d(
+    eta_singlet_official,
+    cmap='RdBu_r',
+)
+ax.set_title("$\\eta_{i,j}$")
+plt.savefig(f"{IMGDIR}/eta_official_singlet.{img_format}")
+plt.close()
+
+ax = plot_data_2d(
+    eta_doublet_official,
+    cmap='RdBu_r',
+)
+ax.set_title("$\\eta_{i,j}$")
+plt.savefig(f"{IMGDIR}/eta_official_doublet.{img_format}")
 plt.close()

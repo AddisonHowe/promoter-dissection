@@ -110,7 +110,6 @@ np.save(f"{OUTDIR}/xi_data.npy", xi_data)
 ax = plot_data(
     xi_data,
     segment_size=1,
-    cmap='RdBu_r',
 )
 ax.set_title("$\\xi_i$")
 plt.savefig(f"{IMGDIR}/xi_data.{img_format}")
