@@ -1,0 +1,9 @@
+# Gene set 14
+pyrLBI
+rplKAJL-rpoBC
+yodB
+atpIBEFHAGDC
+
+# Gene set 15
+msyB
+ndk

@@ -1,6 +1,8 @@
 tests/_tmp/
 out/
 **/.DS_Store
+logs/
+jobs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

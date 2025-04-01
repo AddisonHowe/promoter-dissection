@@ -14,6 +14,8 @@
 datdir=$1
 gene=$2
 
+OUTDIR=results/expression_shift
+
 function process_fpath() {
     fpath=$1
     fname=$(basename $f)
@@ -24,7 +26,7 @@ function process_fpath() {
 for f in ${datdir}/${gene}*; do
     fname=$(process_fpath $f)
     echo $fname
-    python promdis/expression_shift.py -i $f -o results/$gene/$fname \
+    python promdis/expression_shift.py -i $f -o ${OUTDIR}/$gene/$fname \
         -g $gene -p $fname \
         --sep '\s+'
 done
