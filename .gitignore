@@ -3,6 +3,7 @@ out/
 **/.DS_Store
 logs/
 jobs/
+.github/CODEOWNERS
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
