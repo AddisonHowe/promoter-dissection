@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import timeit
 import jax
+import jax.numpy as jnp
 
 import equinox as eqx
 
@@ -21,6 +22,7 @@ from promdis.jax.core import compute_expression_shift_by_mutation
 from promdis.jax.core import compute_total_expression_by_pairwise_mutation
 from promdis.jax.core import compute_mean_expression_by_pairwise_mutation
 from promdis.jax.core import compute_expression_shift_by_pairwise_mutation
+from promdis.jax.helpers import get_segments
 
 
 #####################
@@ -207,11 +209,16 @@ def test_compute_total_expression_by_pairwise_mutation(name, segment_size):
     func_name = 'compute_total_expression_by_pairwise_mutation'
     func = eqx.filter_jit(compute_total_expression_by_pairwise_mutation)
     sequences, expression, wt_seq = load_data()
+    segments = jnp.asarray(get_segments(
+        sequences, segment_size, 
+        startpos=0, 
+        stride=segment_size
+    ))
     
     # Warmup
     time0 = timeit.default_timer()
     result = func(
-        sequences, expression, wt_seq, segment_size
+        sequences, expression, wt_seq, segment_size, segments=segments,
     )
     jax.block_until_ready(result)
     time1 = timeit.default_timer()
@@ -222,7 +229,7 @@ def test_compute_total_expression_by_pairwise_mutation(name, segment_size):
     for i in range(NITERS):
         time0 = timeit.default_timer()
         result = func(
-            sequences, expression, wt_seq, segment_size,
+            sequences, expression, wt_seq, segment_size, segments=segments,
         )
         time1 = timeit.default_timer()
         times.append(time1 - time0)
