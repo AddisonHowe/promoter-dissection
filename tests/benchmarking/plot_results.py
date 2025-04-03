@@ -86,13 +86,13 @@ bars_jax = ax.bar(
 for bar in bars_reg:
     ax.text(
         bar.get_x() + bar.get_width() / 2, bar.get_height(), 
-        f'{bar.get_height():.2g}', 
+        f'{bar.get_height():.3g}', 
         ha='center', va='bottom', fontsize=10
     )
 for bar in bars_jax:
     ax.text(
         bar.get_x() + bar.get_width() / 2, bar.get_height(), 
-        f'{bar.get_height():.2g}', 
+        f'{bar.get_height():.3g}', 
         ha='center', va='bottom', fontsize=10
     )
 ax.set_xlabel('Function')

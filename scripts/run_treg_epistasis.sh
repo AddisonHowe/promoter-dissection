@@ -37,5 +37,5 @@ python scripts/treg_epistasis.py \
     --sep '\s+' \
     --outdir ${OUTDIR}/${gene}/${fname} \
     --nboot ${NBOOT} \
-    --pbar \
-    ${seedline}
+    ${seedline} \
+    # --pbar \
